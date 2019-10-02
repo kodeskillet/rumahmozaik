@@ -1,0 +1,17 @@
+{
+  "name": "rumahmozaik-server",
+  "version": "0.1.0",
+  "main": "src/app.js",
+  "repository": "https://github.com/kodeskillet/rumahmozaik/tree/master/server",
+  "author": "Faiq Allam (faiq.kaboel@gmail.com)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "morgan": "^1.9.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "nodemon": "^1.19.3"
+  }
+}
