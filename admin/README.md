@@ -1,3 +1,3 @@
 # rumahmozaik - admin side
 
-Powered by [Laravel](https://laravel.com) & Vue [Vue](https://vuejs.org)
+Powered by [Laravel](https://laravel.com) & [Vue](https://vuejs.org)
