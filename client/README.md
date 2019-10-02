@@ -1,4 +1,4 @@
-# client
+# rumahmozaik - client side
 
 ## Project setup
 ```
