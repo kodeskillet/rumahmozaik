@@ -1,4 +1,4 @@
 # rumahmozaik
-An E-Commerce Website for a Special Friend :heart:
+An online shop design craft website
 
 Built with [Laravel](https://laravel.com), [Vue](https://vuejs.org) and :heart:
