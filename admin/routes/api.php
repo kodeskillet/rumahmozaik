@@ -25,6 +25,12 @@ Route::post('product','ProductController@store');
 Route::put('product','ProductController@store');
 Route::delete('product/{id}','ProductController@destroy');
 
+Route::get('catalogtype','CatalogTypeController@index');
+Route::get('catalogtype/{id}','CatalogTypeController@show');
+Route::post('catalogtype','CatalogTypeController@store');
+Route::put('catalogtype','CatalogTypeController@store');
+Route::delete('catalogtype/{id}','CatalogTypeController@destroy');
+
 Route::group(['middleware' => 'api'], function () {
     Route::post('auth/login', 'AuthController@login');
     Route::group(['middleware' => 'auth:api'], function () {
