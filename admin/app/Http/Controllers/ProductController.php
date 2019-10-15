@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Laravue\JsonResponse;
+use App\Resources\ProductResource;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-
+        $Product = Product::paginate(30);
+        return ProductResource::Collection($Product);
     }
 
     public function store(Request $request)
