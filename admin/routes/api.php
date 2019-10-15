@@ -19,7 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+Route::get('product','ProductController@index');
+Route::get('product/{id}','ProductController@show');
+Route::post('product','ProductController@store');
+Route::put('product','ProductController@store');
+Route::delete('product/{id}','ProductController@destroy');
 
 Route::group(['middleware' => 'api'], function () {
     Route::post('auth/login', 'AuthController@login');
