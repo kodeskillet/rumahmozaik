@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'id'=>$this->id,
             'catalogName'=>$this->catalogName,
             'catalogType'=>$this->catalogType,
-            'picture'=>'http://i.pravatar.cc',
+            'picture'=>$this->picture,
             'harga'=>$this->harga,
         ];
     }
