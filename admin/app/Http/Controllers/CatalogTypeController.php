@@ -4,20 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CatalogType;
-use App\Http\CatalogTypeResource;
+use App\Http\Resources\CatalogTypeResource;
 
 class CatalogTypeController extends Controller
 {
     public function index()
     {
         $type = CatalogType::all();
-        return CatalogTypeResource::collection($type);
+        return CatalogTypeResource::Collection($type);
     }
 
     public function store(Request $request)
     {
         $type = $request->isMethod('put') ? CatalogType::findOrFail($request->id) : new CatalogType;
-        $type->id = $request->input('id');
         $type->name = $request->input('name');
 
         if($type->save()){
