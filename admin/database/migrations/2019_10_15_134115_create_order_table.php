@@ -17,8 +17,7 @@ class CreateOrderTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('address');
-            $table->string('greeting');
-            $table->string('note');
+            $table->bigInteger('total_price');
             $table->integer('status')->default(0);
             $table->dateTime('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('expired_at');
