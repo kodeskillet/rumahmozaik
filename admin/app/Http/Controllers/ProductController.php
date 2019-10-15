@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Laravue\JsonResponse;
-use App\Resources\ProductResource;
+use App\Http\Resources\ProductResource;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
