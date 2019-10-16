@@ -11,6 +11,7 @@
 /public/stats.html
 /storage/*.key
 /vendor
+/node_modules
 /public/*.js
 /public/*.js.map
 .env
