@@ -3,6 +3,7 @@
 */dist
 */tests
 */coverages
+*/vendor
 
 # local env files
 */.env.local
