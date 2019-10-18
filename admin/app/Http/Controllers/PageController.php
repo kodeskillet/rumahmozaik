@@ -15,16 +15,6 @@ class PageController extends Controller
     }
 
     /**
-     * Display maps page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function maps()
-    {
-        return view('pages.maps');
-    }
-
-    /**
      * Display tables page
      *
      * @return \Illuminate\View\View
@@ -45,16 +35,6 @@ class PageController extends Controller
     }
 
     /**
-     * Display rtl page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function rtl()
-    {
-        return view('pages.rtl');
-    }
-
-    /**
      * Display typography page
      *
      * @return \Illuminate\View\View
@@ -64,13 +44,13 @@ class PageController extends Controller
         return view('pages.typography');
     }
 
-    /**
-     * Display upgrade page
-     *
-     * @return \Illuminate\View\View
-     */
-    public function upgrade()
+    public function product()
     {
-        return view('pages.upgrade');
+        return view('pages.product');
+    }
+
+    public function catalog()
+    {
+        return view('pages.catalog');
     }
 }
