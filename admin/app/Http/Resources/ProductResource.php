@@ -16,10 +16,10 @@ class ProductResource extends JsonResource
     {
         return [
             'id'=>$this->id,
-            'catalogName'=>$this->catalogName,
-            'catalogType'=>CatalogTypeResource::collection($this->catalogType),
+            'productName'=>$this->productName,
+            'catalogType'=>$this->catalogType,
             'picture'=>$this->picture,
-            'harga'=>$this->harga,
+            'price'=>$this->price,
         ];
     }
 }

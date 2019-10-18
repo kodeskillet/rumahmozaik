@@ -21,10 +21,10 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
-        $product->catalogName = $request->input('catalogName');
+        $product->productName = $request->input('productName');
         $product->catalogType = $request->input('catalogType');
         $product->picture = "http://i.pravatar.cc";
-        $product->harga = $request->input('harga');
+        $product->price = $request->input('price');
 
         if($product->save()){
             return new ProductResource($product);
