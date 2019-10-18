@@ -35,6 +35,30 @@
                     </ul>
                 </div>
             </li>
+            <li>
+                <a data-toggle="collapse" href="#data-input" aria-expanded="true">
+                    <i class="fab fa-laravel" ></i>
+                    <span class="nav-link-text" >{{ __('Edit Data') }}</span>
+                    <b class="caret mt-1"></b>
+                </a>
+
+                <div class="collapse show" id="data-input">
+                    <ul class="nav pl-4">
+                        <li @if ($pageSlug == 'profile') class="active " @endif>
+                            <a href="{{ route('profile.edit')  }}">
+                                <i class="tim-icons icon-single-02"></i>
+                                <p>{{ _('User Profile') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug == 'users') class="active " @endif>
+                            <a href="{{ route('user.index')  }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ _('User Management') }}</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li @if ($pageSlug == 'notifications') class="active " @endif>
                 <a href="{{ route('pages.notifications') }}">
                     <i class="tim-icons icon-bell-55"></i>
@@ -51,6 +75,12 @@
                 <a href="{{ route('pages.typography') }}">
                     <i class="tim-icons icon-align-center"></i>
                     <p>{{ _('Typography') }}</p>
+                </a>
+            </li>
+            <li @if ($pageSlug == 'icons') class="active " @endif>
+                <a href="{{ route('pages.icons') }}">
+                    <i class="tim-icons icon-align-center"></i>
+                    <p>{{ _('Icon') }}</p>
                 </a>
             </li>
         </ul>
