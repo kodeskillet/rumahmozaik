@@ -1,4 +1,4 @@
-@extends('layouts.app', ['page' => __('Typography'), 'pageSlug' => 'typography'])
+@extends('layouts.app', ['page' => __('Product Edit'), 'pageSlug' => 'product'])
 
 @section('content')
 
