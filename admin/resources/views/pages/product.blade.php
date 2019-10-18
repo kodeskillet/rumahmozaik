@@ -19,6 +19,8 @@
                         @include('alerts.feedback', ['field' => 'product'])
                     </div>
 
+
+
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name']) --}}
 
