@@ -13,7 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('product','ProductController@index');
+Route::get('product/{id}','ProductController@show');
+Route::post('product','ProductController@store');
+Route::put('product','ProductController@store');
+Route::delete('product/{id}','ProductController@destroy');
 
+Route::get('catalogtype','CatalogTypeController@index');
+Route::get('catalogtype/{id}','CatalogTypeController@show');
+Route::post('catalogtype','CatalogTypeController@store');
+Route::put('catalogtype','CatalogTypeController@store');
+Route::delete('catalogtype/{id}','CatalogTypeController@destroy');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
