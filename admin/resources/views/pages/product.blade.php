@@ -13,6 +13,12 @@
                 @csrf
                 <div class="form-group" {{$errors->has('productName') ? 'has-danger' : ''}}>
                     <label>{{'Nama Barang'}}</label>
+                    <input
+                    type="text"
+                    name="productName"
+                    class="form-control{{$errors->has('productName')?'is-invalid':''}}"
+                    placeholder="{{_('Nama Produk')}}">
+                    @include('alerts.feedback', ['field' => 'productName'])
                 </div>
             </div>
             </form>
