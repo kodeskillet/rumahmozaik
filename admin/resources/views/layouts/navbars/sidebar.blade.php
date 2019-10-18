@@ -44,16 +44,16 @@
 
                 <div class="collapse show" id="data-input">
                     <ul class="nav pl-4">
-                        <li @if ($pageSlug == 'profile') class="active " @endif>
-                            <a href="{{ route('profile.edit')  }}">
+                        <li @if ($pageSlug == 'product') class="active " @endif>
+                            <a href="{{ route('pages.product')  }}">
                                 <i class="tim-icons icon-single-02"></i>
-                                <p>{{ _('User Profile') }}</p>
+                                <p>{{ _('Product Edit') }}</p>
                             </a>
                         </li>
-                        <li @if ($pageSlug == 'users') class="active " @endif>
-                            <a href="{{ route('user.index')  }}">
+                        <li @if ($pageSlug == 'catalog') class="active " @endif>
+                            <a href="{{ route('pages.catalog')  }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
-                                <p>{{ _('User Management') }}</p>
+                                <p>{{ _('Catalog Edit') }}</p>
                             </a>
                         </li>
                     </ul>
