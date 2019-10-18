@@ -35,12 +35,6 @@
                     </ul>
                 </div>
             </li>
-            <li @if ($pageSlug == 'icons') class="active " @endif>
-                <a href="{{ route('pages.icons') }}">
-                    <i class="tim-icons icon-atom"></i>
-                    <p>{{ _('Icons') }}</p>
-                </a>
-            </li>
             <li @if ($pageSlug == 'notifications') class="active " @endif>
                 <a href="{{ route('pages.notifications') }}">
                     <i class="tim-icons icon-bell-55"></i>
