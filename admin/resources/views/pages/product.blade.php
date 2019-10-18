@@ -9,18 +9,24 @@
                 <h5 class="title">{{ _('Edit Product') }}</h5>
             </div>
             <form method = "post" action="http://localhost:8000/api/product">
-            <div class="card-body">
-                @csrf
-                <div class="form-group" {{$errors->has('productName') ? 'has-danger' : ''}}>
-                    <label>{{'Nama Barang'}}</label>
-                    <input
-                    type="text"
-                    name="productName"
-                    class="form-control{{$errors->has('productName')?'is-invalid':''}}"
-                    placeholder="{{_('Nama Produk')}}">
-                    @include('alerts.feedback', ['field' => 'productName'])
+                <div class="card-body">
+                    @csrf
+
+                    @include ('alerts.success')
+                    <div class="form-group" {{$errors->has('productName') ? 'has-danger' : ''}}>
+                        <label>{{'Nama Barang'}}</label>
+                        <input
+                        type="text"
+                        name="productName"
+                        class="form-control{{$errors->has('productName')?'is-invalid':''}}"
+                        placeholder="{{_('Nama Produk')}}">
+                        @include('alerts.feedback', ['field' => 'productName'])
+                    </div>
+
                 </div>
-            </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                </div>
             </form>
         </div>
     </div>
