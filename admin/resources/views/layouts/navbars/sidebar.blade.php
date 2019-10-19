@@ -37,7 +37,7 @@
             </li>
             <li>
                 <a data-toggle="collapse" href="#data-input" aria-expanded="true">
-                    <i class="fab fa-laravel" ></i>
+                    <i class="fab fa-laravel tim-icons icon-settings-gear-63" ></i>
                     <span class="nav-link-text" >{{ __('Edit Data') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
