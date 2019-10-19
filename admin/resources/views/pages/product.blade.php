@@ -8,7 +8,7 @@
             <div class="card-header">
                 <h5 class="title">{{ _('Edit Product') }}</h5>
             </div>
-            <form method = "post" action="http://localhost:8000/api/product" enctype="multipart/form-data">
+            <form enctype="multipart/form-data" id="Form">
                 <div class="card-body">
                     @csrf
                     @method('post')
@@ -35,11 +35,38 @@
 
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-fill btn-primary">{{ _('Save') }}</button>
+                    <button class="btn btn-fill btn-primary" id="ajaxSubmit">{{ _('Save') }}</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+<script>
+    jQuery(document).ready(function(){
+       jQuery('#ajaxSubmit').click(function(e){
+          e.preventDefault();
+          $.ajaxSetup({
+             headers: {
+                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+             }
+         });
+            var productName = $("input[name=productName").val();
+            var price = $("input[name=price]").val();
+          jQuery.ajax({
+             url: "http://127.0.0.1:8000/api/product",
+             method: 'post',
+             data: {
+                productName: productName,
+                catalogType: jQuery('#catalogType').val(),
+                price: price
+             },
+             success: function(){
+                document.getElementById("Form").reset();
+             }});
+          });
+       });
+</script>
 
 @endsection

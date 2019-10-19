@@ -52,6 +52,11 @@ class PageController extends Controller
         return view('pages.product',compact('catalog'));
     }
 
+    // public function productStore(ProductController $products)
+    // {
+
+    // }
+
     public function catalog()
     {
         return view('pages.catalog');

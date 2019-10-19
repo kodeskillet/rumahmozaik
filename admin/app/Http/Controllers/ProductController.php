@@ -21,21 +21,23 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'productName' => 'required',
-            'catalogType' => 'required',
-            'price' => 'required',
-            // 'picture' => 'required|max:10240', //5MB
-        ]);
+        // $request->validate([
+        //     'productName' => 'required',
+        //     'catalogType' => 'required',
+        //     'price' => 'required',
+        //     // 'picture' => 'required|max:10240', //5MB
+        // ]);
 
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
-        $product->productName = $request->input('productName');
-        $product->catalogType = $request->input('catalogType');
+        $product->productName = $request->productName;
+        $product->catalogType = $request->catalogType;
         $product->picture = "http://i.pravatar.cc";
-        $product->price = $request->input('price');
+        $product->price = $request->price;
 
         if($product->save()){
-            return new ProductResource($product);
+            return response()->json([
+                'message' => 'Insert Success'
+            ]);
         }
     }
 
