@@ -20,7 +20,9 @@ class CatalogTypeController extends Controller
         $type->name = $request->input('name');
 
         if($type->save()){
-            return new CatalogTypeResource($type);
+            return response()->json([
+                'message' => 'Insert Success'
+            ]);
         }
     }
 

@@ -13,7 +13,7 @@
                     @csrf
                     @method('post')
 
-                    <div class="form-group{{ $errors->has('productName') ? ' has-danger' : '' }}">
+                    <div class="form-group{{ $errors->has('form') ? ' has-danger' : '' }}">
                         <label>{{ _('Nama Produk') }}</label>
                         <input type="text" name="productName" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Produk') }}">
                         @include('alerts.feedback', ['field' => 'product'])
