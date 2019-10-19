@@ -6,6 +6,7 @@ use App\Product;
 use App\CatalogType;
 use App\Laravue\JsonResponse;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\CatalogTypeResource;
 
 use Illuminate\Http\Request;
@@ -20,6 +21,13 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'productName' => 'required',
+            'catalogType' => 'required',
+            'price' => 'required',
+            // 'picture' => 'required|max:10240', //5MB
+        ]);
+
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
         $product->productName = $request->input('productName');
         $product->catalogType = $request->input('catalogType');

@@ -18,12 +18,17 @@
                         <input type="text" name="productName" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Produk') }}">
                         @include('alerts.feedback', ['field' => 'product'])
 
-                        <select class="custom-select" id="catalogType">
-                            <option selected>Chose</option>
+                        <label>{{_('Tipe Produk')}}</label>
+                        <select class="form-control" id="catalogType{{ $errors->has('productName') ? ' is-invalid' : '' }}" name="catalogType">
+                            <option selected>Choose</option>
                             @foreach ($catalog as $cat)
                                 <option value="{{$cat->id}}">{{$cat->name}}</option>
                             @endforeach
                         </select>
+                        <label>{{_('Harga')}}</label>
+                        <input type="number" name="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ _('Harga') }}">
+                        @include('alerts.feedback', ['field' => 'price'])
+
                     </div>
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name']) --}}
