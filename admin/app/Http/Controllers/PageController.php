@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\CatalogTypeController;
+
 class PageController extends Controller
 {
     /**
@@ -44,9 +46,10 @@ class PageController extends Controller
         return view('pages.typography');
     }
 
-    public function product()
+    public function product(CatalogTypeController $catalogs)
     {
-        return view('pages.product');
+        $catalog = $catalogs->index();
+        return view('pages.product',compact('catalog'));
     }
 
     public function catalog()

@@ -17,10 +17,14 @@
                         <label>{{ _('Nama Produk') }}</label>
                         <input type="text" name="productName" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Produk') }}">
                         @include('alerts.feedback', ['field' => 'product'])
+
+                        <select class="custom-select" id="catalogType">
+                            <option selected>Chose</option>
+                            @foreach ($catalog as $cat)
+                                <option value="{{$cat->id}}">{{$cat->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
-
-
-
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name']) --}}
 
