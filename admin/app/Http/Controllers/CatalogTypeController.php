@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CatalogType;
+use Datatables;
 use App\Http\Resources\CatalogTypeResource;
 
 class CatalogTypeController extends Controller
@@ -12,6 +13,11 @@ class CatalogTypeController extends Controller
     {
         $type = CatalogType::all();
         return CatalogTypeResource::Collection($type);
+    }
+
+    public function indexTable()
+    {
+        return Datatables::of(CatalogType::query())->make(true);
     }
 
     public function store(Request $request)
