@@ -69,18 +69,7 @@
           });
        });
 
-       $(document).ready(function(){
-            $('#tableCat').DataTable({
-                "ajax":{
-                    "url":"http://127.0.0.1:8000/api/catalogtype",
-                    "type" : "get"
-                },
-                "columns":[
-                    {"data":"id"},
-                    {"data":"name"}
-                ]
-            });
-       });
+
 
 </script>
 @endsection
