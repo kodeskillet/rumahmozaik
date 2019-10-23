@@ -27,7 +27,7 @@
                 <h5>Daftar Catalog</h5>
             </div>
             <div class="table-responsive">
-                <table class="table">
+                <table class="table" id="tableCat">
                     <thead class="text-primary">
                         <th>
                             ID
@@ -39,13 +39,6 @@
                             Action
                         </th>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                1
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
@@ -75,5 +68,19 @@
              }});
           });
        });
+
+       $(document).ready(function(){
+            $('#tableCat').DataTable({
+                "ajax":{
+                    "url":"http://127.0.0.1:8000/api/catalogtype",
+                    "type" : "get"
+                },
+                "columns":[
+                    {"data":"id"},
+                    {"data":"name"}
+                ]
+            });
+       });
+
 </script>
 @endsection
