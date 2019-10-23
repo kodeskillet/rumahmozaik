@@ -32,6 +32,12 @@
                         <th>
                             ID
                         </th>
+                        <th>
+                            Nama Catalog
+                        </th>
+                        <th>
+                            Action
+                        </th>
                     </thead>
                     <tbody>
                         <tr>
