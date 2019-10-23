@@ -15,11 +15,6 @@ class CatalogTypeController extends Controller
         return CatalogTypeResource::Collection($type);
     }
 
-    public function indexTable()
-    {
-        return Datatables::of(CatalogType::query())->make(true);
-    }
-
     public function store(Request $request)
     {
         $type = $request->isMethod('put') ? CatalogType::findOrFail($request->id) : new CatalogType;

@@ -35,9 +35,6 @@
                         <th>
                             Nama Catalog
                         </th>
-                        <th>
-                            Action
-                        </th>
                     </thead>
                 </table>
             </div>
@@ -69,7 +66,18 @@
           });
        });
 
-
+       $(document).ready(function(){
+            $.getJSON("http://127.0.0.1:8000/api/catalogtype",function(data){
+                var catalog_data = '';
+                $.each(data, function(key, value){
+                    catalog_data += '<tr>';
+                    catalog_data += '<td>'+value.id+'</td>';
+                    catalog_data += '<td>'+value.name+'</td>';
+                    catalog_data += '</tr>';
+                });
+                $('#tableCat').append(catalog_data);
+            });
+       });
 
 </script>
 @endsection
