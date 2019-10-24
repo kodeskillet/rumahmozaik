@@ -62,4 +62,10 @@ class PageController extends Controller
         $catalogs = $catalogs->index();
         return view('pages.catalog',compact('catalogs'));
     }
+
+    public function catalogDelete(CatalogTypeController $catalogs, $id)
+    {
+        $catalogs = $catalogs->destroy($id);
+        return view('pages.catalog',compact('catalogs'));
+    }
 }

@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
         Route::get('product', ['as' => 'pages.product', 'uses' => 'PageController@product']);
         Route::get('catalog', ['as' => 'pages.catalog', 'uses' => 'PageController@catalog']);
+        Route::delete('catalog/{id}', ['as' => 'pages.catalogDelete', 'uses' => 'PageController@catalogDelete']);
 });
 
 Route::group(['middleware' => 'auth'], function () {

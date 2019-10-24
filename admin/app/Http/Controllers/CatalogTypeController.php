@@ -35,11 +35,12 @@ class CatalogTypeController extends Controller
 
     public function destroy($id)
     {
-        $type = CatalogTypeResource::findOrFail($id);
+        $type = CatalogType::findOrFail($id);
 
         //  Delete the post, return as confirmation
         if ($type->delete()) {
-            return new CatalogTypeResource($post);
+            $catalog = CatalogType::all();
+            return CatalogTypeResource::Collection($catalog);
         }
     }
 }
