@@ -66,6 +66,6 @@ class PageController extends Controller
     public function catalogDelete(CatalogTypeController $catalogs, $id)
     {
         $catalogs = $catalogs->destroy($id);
-        return view('pages.catalog',compact('catalogs'));
+        return redirect()->action('PageController@catalog');
     }
 }
