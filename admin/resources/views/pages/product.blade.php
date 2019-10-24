@@ -54,7 +54,7 @@
          });
             var productName = $("input[name=productName").val();
             var price = $("input[name=price]").val();
-          jQuery.ajax({
+            jQuery.ajax({
              url: "http://127.0.0.1:8000/api/product",
              method: 'post',
              data: {

@@ -26,17 +26,23 @@
             <div class="card-header">
                 <h5>Daftar Catalog</h5>
             </div>
-            <div class="table-responsive">
-                <table class="table" id="tableCat">
-                    <thead class="text-primary">
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Nama Catalog
-                        </th>
-                    </thead>
-                </table>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="tableCat">
+                        <thead>
+                            <th>
+                                Nama Catalog
+                            </th>
+                        </thead>
+                        <tbody>
+                            @foreach($catalogs as $catalog)
+                                <tr>
+                                    <td>{{$catalog->name}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -66,20 +72,26 @@
           });
        });
 
-       $(document).ready(function(){
-            $.getJSON("http://127.0.0.1:8000/api/catalogtype",function(data){
-                var catalog_data = '<tbody>';
-                $.each(data, function(key, value){
-                    catalog_data += '<tr>';
-                    catalog_data += '<td>'+value.id+'</td>';
-                    catalog_data += '<td>'+value.name+'</td>';
-                    catalog_data += '</tr>';
+        // $(document).ready(function() {
+        //     setInterval(function() {
+        //         $('#tableCat').load('{{ action('PageController@product') }}');
+        //     }, 2000);
+        // });
 
-                });
-                catalog_data += '</tbody>';
-                // console.log(data);
-            });
-       });
+    //    $(document).ready(function(){
+    //         $.getJSON("http://127.0.0.1:8000/api/catalogtype",function(data){
+    //             var catalog_data = '<tbody>';
+    //             $.each(data, function(key, value){
+    //                 catalog_data += '<tr>';
+    //                 catalog_data += '<td>'+value.id+'</td>';
+    //                 catalog_data += '<td>'+value.name+'</td>';
+    //                 catalog_data += '</tr>';
+
+    //             });
+    //             catalog_data += '</tbody>';
+    //             // console.log(data);
+    //         });
+    //    });
 
 </script>
 @endsection

@@ -57,8 +57,9 @@ class PageController extends Controller
 
     // }
 
-    public function catalog()
+    public function catalog(CatalogTypeController $catalogs)
     {
-        return view('pages.catalog');
+        $catalogs = $catalogs->index();
+        return view('pages.catalog',compact('catalogs'));
     }
 }

@@ -12,8 +12,7 @@ class CatalogTypeController extends Controller
     public function index()
     {
         $type = CatalogType::all();
-        $data = CatalogTypeResource::Collection($type);
-        return json_encode($data);
+        return CatalogTypeResource::Collection($type);
     }
 
     public function store(Request $request)
