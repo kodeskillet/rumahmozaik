@@ -44,7 +44,7 @@
                                     <form method="POST" action="/catalog/{{$catalog->id}}">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
-                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog"><i class="tim-icons icon-simple-delete"></i></button></td>
+                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
                                     </form>
                                 </tr>
                             @endforeach
@@ -80,10 +80,10 @@
           });
        });
 
-    //    $('.delete-user').click(function(e){
+    //    $('.delete-catalog').click(function(e){
     //        e.preventDefault()
     //        if(confirm('Are you sure?')){
-    //            $(e.target).closest('form').submit()
+    //             $(e.target).closest('form').submit()
     //        }
     //    });
 
