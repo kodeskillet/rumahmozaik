@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\CatalogTypeController;
+use App\Http\Controllers\Product;
 
 class PageController extends Controller
 {
@@ -46,10 +47,11 @@ class PageController extends Controller
         return view('pages.typography');
     }
 
-    public function product(CatalogTypeController $catalogs)
+    public function product(CatalogTypeController $catalogs, ProductController $products)
     {
+        $products = json_decode($products->index());
         $catalog = json_decode($catalogs->index());
-        return view('pages.product',compact('catalog'));
+        return view('pages.product',compact('catalog', 'products'));
     }
 
     // public function productStore(ProductController $products)
