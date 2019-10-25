@@ -48,7 +48,7 @@ class PageController extends Controller
 
     public function product(CatalogTypeController $catalogs)
     {
-        $catalog = $catalogs->index();
+        $catalog = json_decode($catalogs->index());
         return view('pages.product',compact('catalog'));
     }
 
@@ -59,7 +59,7 @@ class PageController extends Controller
 
     public function catalog(CatalogTypeController $catalogs)
     {
-        $catalogs = $catalogs->index();
+        $catalogs = json_decode($catalogs->index());
         return view('pages.catalog',compact('catalogs'));
     }
 

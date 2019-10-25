@@ -12,7 +12,7 @@ class CatalogTypeController extends Controller
     public function index()
     {
         $type = CatalogType::all();
-        return CatalogTypeResource::Collection($type);
+        return json_encode($type);
     }
 
     public function store(Request $request)
@@ -30,7 +30,7 @@ class CatalogTypeController extends Controller
     public function show ($id)
     {
         $type = CatalogType::findOrFail($id);
-        return new CatalogTypeResource($type);
+        return json_encode($type);
     }
 
     public function destroy($id)

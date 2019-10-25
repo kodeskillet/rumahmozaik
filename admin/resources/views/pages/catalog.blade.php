@@ -22,6 +22,7 @@
                 </div>
             </form>
         </div>
+        {{-- {{var_dump($catalogs)}} --}}
         <div class="card">
             <div class="card-header">
                 <h5>Daftar Catalog</h5>
@@ -47,7 +48,9 @@
                                         <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
                                     </form>
                                 </tr>
+                                    {{-- {{var_dump($catalog->name)}} --}}
                             @endforeach
+
                         </tbody>
                     </table>
                 </div>
