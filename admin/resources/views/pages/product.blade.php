@@ -39,6 +39,38 @@
                 </div>
             </form>
         </div>
+        <div class="card">
+            <div class="card-header">
+                <h5>Daftar Product</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="tableCat">
+                        <thead>
+                            <th>
+                                Nama Product
+                            </th>
+                            <th>
+                                Jenis Product
+                            </th>
+                        </thead>
+                        <tbody>
+                            @foreach($products as $product)
+                                <tr>
+                                    <td>{{$product->productName}}</td>
+                                    {{-- <form method="POST" action="/catalog/{{$catalog->id}}">
+                                        {{csrf_field()}}
+                                        {{method_field('DELETE')}}
+                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
+                                    </form> --}}
+                                    <td>{{$product->catalogType}}</td>
+                                </tr>
+                            @endforeach
+                            {{-- var_dump($products) --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
 </div>
 
