@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        return ProductResource::Collection($product);
+        return json_encode($product);
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class ProductController extends Controller
     public function show ($id)
     {
         $product = Product::findOrFail($id);
-        return new ProductResource($product);
+        return json_encode($product);
     }
 
     public function destroy($id)
@@ -53,7 +53,9 @@ class ProductController extends Controller
 
         //  Delete the post, return as confirmation
         if ($product->delete()) {
-            return new ProductResource($product);
+            return response()->json([
+                'message' => 'Delete Success'
+            ]);
         }
     }
 

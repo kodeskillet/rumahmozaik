@@ -40,7 +40,9 @@ class CatalogTypeController extends Controller
         //  Delete the post, return as confirmation
         if ($type->delete()) {
             $catalog = CatalogType::all();
-            return CatalogTypeResource::Collection($catalog);
+            return response()->json([
+                'message' => 'Delete Success'
+            ]);
         }
     }
 }
