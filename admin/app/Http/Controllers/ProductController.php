@@ -16,7 +16,12 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        return json_encode($product);
+        $json = json_encode($product);
+        return $json;
+        // $json = json_decode($json);
+        // foreach($json as $data){
+        //     var_dump($data->productName);
+        // }
     }
 
     public function store(Request $request)
@@ -31,7 +36,7 @@ class ProductController extends Controller
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
         $product->productName = $request->productName;
         $product->catalogType = $request->catalogType;
-        $product->picture = "http://i.pravatar.cc";
+        // $product->picture = $request->;
         $product->price = $request->price;
 
         if($product->save()){
