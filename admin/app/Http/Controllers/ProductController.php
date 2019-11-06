@@ -37,17 +37,20 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'productName' => 'required',
-        //     'catalogType' => 'required',
-        //     'price' => 'required',
-        //     // 'picture' => 'required|max:10240', //5MB
-        // ]);
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:52,428', //50MB
+        ]);
+
+        $filenameWithExt = $request->file('picture')->getClientOriginalName();
+        $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+        $extension = $request->file('picture')->getClientOriginalExtension();
+        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $path = $request->file('picture')->storeAs('public/products', $fileNameToStore);
 
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
         $product->productName = $request->productName;
         $product->catalogType = $request->catalogType;
-        $product->picture = 'http://i.pravatar.cc';
+        $product->picture = $fileNameToStore;
         $product->price = $request->price;
 
         if($product->save()){

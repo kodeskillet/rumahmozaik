@@ -28,11 +28,13 @@
                         <label>{{_('Harga')}}</label>
                         <input type="number" name="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ _('Harga') }}">
                         @include('alerts.feedback', ['field' => 'price'])
-
+                        <div class="from-control">
+                            <label>{{ _('Product Image') }}</label>
+                            <input type="file" name="picture" class="form-control-file">
+                        </div>
                     </div>
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name']) --}}
-
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-fill btn-primary" id="ajaxSubmit">{{ _('Save') }}</button>
@@ -97,12 +99,14 @@
          });
             var productName = $("input[name=productName").val();
             var price = $("input[name=price]").val();
+            var picture = $("#picture").val();
             jQuery.ajax({
              url: "http://127.0.0.1:8000/api/product",
              method: 'post',
              data: {
                 productName: productName,
                 catalogType: jQuery('#catalogType').val(),
+                picture: picture,
                 price: price
              },
              success: function(){
