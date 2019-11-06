@@ -8,6 +8,7 @@ use App\Laravue\JsonResponse;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\CatalogTypeResource;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -16,8 +17,17 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
-        $json = json_encode($product);
-        return $json;
+        foreach($product as $aproduct){
+            $aproduct->catalogName = DB::table('catalog_type')
+                ->select('name')
+                ->where('id',$aproduct->catalogType)
+                ->first();
+        }
+        return ProductResource::collection($product);
+
+
+        // $json = json_encode($product);
+        // return $json;
         // $json = json_decode($json);
         // foreach($json as $data){
         //     var_dump($data->productName);

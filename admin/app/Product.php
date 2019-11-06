@@ -8,4 +8,5 @@ class Product extends Model
 {
     protected $fillable = ['productName'];
     protected $table = 'product';
+    protected $appends = ['catalogName'];
 }
