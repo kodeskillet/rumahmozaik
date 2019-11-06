@@ -41,29 +41,40 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h5>Daftar Product</h5>
+                <h3>Daftar Product</h3>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" id="tableCat">
                         <thead>
                             <th>
+                                Foto Product
+                            </th>
+                            <th>
                                 Nama Product
                             </th>
                             <th>
                                 Jenis Product
                             </th>
+                            <th>
+                                Harga
+                            </th>
+                            <th>
+                                Action
+                            </th>
                         </thead>
                         <tbody>
                             @foreach($products as $product)
                                 <tr>
+                                    <td>{{$product->picture}}</td>
                                     <td>{{$product->productName}}</td>
-                                    {{-- <form method="POST" action="/catalog/{{$catalog->id}}">
+                                    <td>{{$product->catalogName->name}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <form method="POST" action="/product/{{$product->id}}">
                                         {{csrf_field()}}
                                         {{method_field('DELETE')}}
                                         <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
-                                    </form> --}}
-                                    <td>{{$product->catalogType}}</td>
+                                    </form>
                                 </tr>
                             @endforeach
                             {{-- var_dump($products) --}}

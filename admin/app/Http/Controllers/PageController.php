@@ -54,6 +54,12 @@ class PageController extends Controller
         return view('pages.product',compact('catalog', 'products'));
     }
 
+    public function productDelete(ProductController $product, $id)
+    {
+        $product=$product->destroy($id);
+        return redirect()->action('PageController@product');
+    }
+
     // public function productStore(ProductController $products)
     // {
 

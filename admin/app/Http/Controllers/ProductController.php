@@ -16,14 +16,15 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $product = Product::all();
+        $product = Product::all()->sortBy('catalogName');
         foreach($product as $aproduct){
             $aproduct->catalogName = DB::table('catalog_type')
                 ->select('name')
                 ->where('id',$aproduct->catalogType)
                 ->first();
         }
-        return ProductResource::collection($product);
+        $json = json_encode(ProductResource::collection($product));
+        return $json;
 
 
         // $json = json_encode($product);
@@ -46,7 +47,7 @@ class ProductController extends Controller
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
         $product->productName = $request->productName;
         $product->catalogType = $request->catalogType;
-        // $product->picture = $request->;
+        $product->picture = 'http://i.pravatar.cc';
         $product->price = $request->price;
 
         if($product->save()){
