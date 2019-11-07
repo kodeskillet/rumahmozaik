@@ -101,6 +101,7 @@
             $('#inputGroupFile01').on('change',function(){
                 //get the file name
                 var fileName = $(this).val();
+                fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length);
                 //replace the "Choose a file" label
                 $(this).next('.custom-file-label').html(fileName);
             })
@@ -113,23 +114,25 @@
                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
              }
          });
-            var productName = $("input[name=productName").val();
-            var price = $("input[name=price]").val();
-            var picture = $("#picture").val();
+            var form = document.getElementById('Form');
+            var formData = new FormData(form);
             jQuery.ajax({
-             url: "http://127.0.0.1:8000/api/product",
-             method: 'post',
-             data: {
-                productName: productName,
-                catalogType: jQuery('#catalogType').val(),
-                picture: picture,
-                price: price
-             },
-             success: function(){
-                document.getElementById("Form").reset();
-             }});
+                url: "http://127.0.0.1:8000/api/product",
+                method: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(){
+                    form.reset(),
+                    location.reload()
+                },
+                error: function(){
+                    console.log(formData);
+                }});
           });
        });
+
+
 </script>
 
 @endsection

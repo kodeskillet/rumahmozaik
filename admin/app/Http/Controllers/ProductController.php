@@ -37,14 +37,14 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:52,428', //50MB
-        ]);
+        // $request->validate([
+        //     'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:52,428', //50MB
+        // ]);
 
         $filenameWithExt = $request->file('picture')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         $extension = $request->file('picture')->getClientOriginalExtension();
-        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $fileNameToStore = time().'_'.$filename.'.'.$extension;
         $path = $request->file('picture')->storeAs('public/products', $fileNameToStore);
 
         $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
