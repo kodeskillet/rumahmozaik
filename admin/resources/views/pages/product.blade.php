@@ -28,9 +28,18 @@
                         <label>{{_('Harga')}}</label>
                         <input type="number" name="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ _('Harga') }}">
                         @include('alerts.feedback', ['field' => 'price'])
-                        <div class="from-control">
-                            <label>{{ _('Product Image') }}</label>
-                            <input type="file" name="picture" class="form-control-file">
+                        {{-- <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile02" name="picture">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div> --}}
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="inputGroupFile01" name="picture">
+                              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
                         </div>
                     </div>
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
@@ -89,6 +98,13 @@
 
 
 <script>
+            $('#inputGroupFile01').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+
     jQuery(document).ready(function(){
        jQuery('#ajaxSubmit').click(function(e){
           e.preventDefault();
