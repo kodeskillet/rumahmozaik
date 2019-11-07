@@ -37,9 +37,9 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:52,428', //50MB
-        // ]);
+        $request->validate([
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:52428', //50MB
+        ]);
 
         $filenameWithExt = $request->file('picture')->getClientOriginalName();
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -56,6 +56,10 @@ class ProductController extends Controller
         if($product->save()){
             return response()->json([
                 'message' => 'Insert Success'
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'Insert Unsuccess'
             ]);
         }
     }

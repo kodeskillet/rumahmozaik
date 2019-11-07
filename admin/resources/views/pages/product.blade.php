@@ -125,9 +125,6 @@
                 success: function(){
                     form.reset(),
                     location.reload()
-                },
-                error: function(){
-                    console.log(formData);
                 }});
           });
        });
