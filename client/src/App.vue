@@ -1,9 +1,18 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-icon @click="showMenu = !showMenu" :class="{active: showMenu}">
-        {{ menuIcon }}
-      </v-icon>
+      <div class="menu-section" @click="showMenu = !showMenu">
+        <div @click="showMenu = !showMenu">
+          <v-icon @click="showMenu = !showMenu" :class="{active: showMenu}">
+            {{ menuIcon }}
+          </v-icon>
+        </div>
+        <div class="location-indicator">
+          <v-toolbar-title class="text-uppercase" :class="{active: showMenu}">
+            <span style="font-size: 1.2rem">{{ location }}</span>
+          </v-toolbar-title>
+        </div>
+      </div>
       <v-spacer></v-spacer>
       <v-toolbar-title class="headline text-uppercase">
         <span class="quote">All About Design</span>
@@ -21,7 +30,7 @@
         <v-list dense rounded>
           <v-list-item v-for="item in menuItems"
                        :key="item.title"
-                       @click="navigator(item.navigateTo)"
+                       @click="navigator(item)"
           >
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
@@ -81,7 +90,8 @@
           title: "Contact",
           navigateTo: "",
         },
-      ]
+      ],
+      location: "HOME"
     }),
     watch: {
       // eslint-disable-next-line no-unused-vars
@@ -94,9 +104,10 @@
       }
     },
     methods: {
-      navigator(goto) {
-        this.$router.push(goto);
+      navigator(page) {
+        this.$router.push(page.navigateTo);
         this.showMenu = false;
+        this.location = page.title;
       }
     }
   }
@@ -128,7 +139,7 @@
     opacity: 1;
   }
 
-  i.active {
+  .active {
     color: #ee8181 !important;
   }
 
@@ -140,4 +151,19 @@
   span.separator {
     color: #bbb !important;
   }
+
+  .menu-section {
+    display: flex;
+    padding: 10px
+  }
+
+  .menu-section div {
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  .location-indicator {
+    margin-left: 10px;
+  }
+
 </style>
