@@ -38,8 +38,13 @@
     <v-content @click.native="showMenu = false">
       <router-view/>
 
-      <v-btn fixed dark fab bottom right color="pink">
-        <v-icon>mdi-cart</v-icon>
+      <v-btn fixed dark fab bottom right class="pink-btn">
+        <v-badge left>
+          <template v-slot:badge>
+            <span>2</span>
+          </template>
+          <v-icon>mdi-cart</v-icon>
+        </v-badge>
       </v-btn>
     </v-content>
   </v-app>
@@ -54,7 +59,7 @@
         {
           icon: "mdi-home",
           title: "Home",
-          navigateTo: "",
+          navigateTo: "/",
         },
         {
           icon: "mdi-package-variant-closed",
@@ -69,7 +74,7 @@
         {
           icon: "mdi-information-outline",
           title: "About",
-          navigateTo: "",
+          navigateTo: "/about",
         },
         {
           icon: "mdi-email",
@@ -79,6 +84,7 @@
       ]
     }),
     watch: {
+      // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
         if (newVal) {
           this.menuIcon = "mdi-menu-open"
@@ -90,6 +96,7 @@
     methods: {
       navigator(goto) {
         this.$router.push(goto);
+        this.showMenu = false;
       }
     }
   }
@@ -101,6 +108,9 @@
   }
   .light-pink {
     color: #ee8181;
+  }
+  .pink-btn {
+    background: #fb4444 !important;
   }
 </style>
 
