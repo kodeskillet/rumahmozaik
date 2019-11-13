@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CatalogType;
+use Datatables;
 use App\Http\Resources\CatalogTypeResource;
 
 class CatalogTypeController extends Controller
@@ -11,7 +12,7 @@ class CatalogTypeController extends Controller
     public function index()
     {
         $type = CatalogType::all();
-        return CatalogTypeResource::Collection($type);
+        return json_encode($type);
     }
 
     public function store(Request $request)
@@ -29,16 +30,19 @@ class CatalogTypeController extends Controller
     public function show ($id)
     {
         $type = CatalogType::findOrFail($id);
-        return new CatalogTypeResource($type);
+        return json_encode($type);
     }
 
     public function destroy($id)
     {
-        $type = CatalogTypeResource::findOrFail($id);
+        $type = CatalogType::findOrFail($id);
 
         //  Delete the post, return as confirmation
         if ($type->delete()) {
-            return new CatalogTypeResource($post);
+            $catalog = CatalogType::all();
+            return response()->json([
+                'message' => 'Delete Success'
+            ]);
         }
     }
 }

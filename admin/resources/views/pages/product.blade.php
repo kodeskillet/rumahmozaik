@@ -28,22 +28,84 @@
                         <label>{{_('Harga')}}</label>
                         <input type="number" name="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ _('Harga') }}">
                         @include('alerts.feedback', ['field' => 'price'])
-
+                        {{-- <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile02" name="picture">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div> --}}
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="inputGroupFile01" name="picture">
+                              <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                            </div>
+                        </div>
                     </div>
                     {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
                                 @include('alerts.feedback', ['field' => 'name']) --}}
-
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-fill btn-primary" id="ajaxSubmit">{{ _('Save') }}</button>
                 </div>
             </form>
         </div>
+        <div class="card">
+            <div class="card-header">
+                <h3>Daftar Product</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table" id="tableCat">
+                        <thead>
+                            <th>
+                                Foto Product
+                            </th>
+                            <th>
+                                Nama Product
+                            </th>
+                            <th>
+                                Jenis Product
+                            </th>
+                            <th>
+                                Harga
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </thead>
+                        <tbody>
+                            @foreach($products as $product)
+                                <tr>
+                                    <td>{{$product->picture}}</td>
+                                    <td>{{$product->productName}}</td>
+                                    <td>{{$product->catalogName->name}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <form method="POST" action="/product/{{$product->id}}">
+                                        {{csrf_field()}}
+                                        {{method_field('DELETE')}}
+                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
+                                    </form>
+                                </tr>
+                            @endforeach
+                            {{-- var_dump($products) --}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
 </div>
 
 
 <script>
+            $('#inputGroupFile01').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length);
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+
     jQuery(document).ready(function(){
        jQuery('#ajaxSubmit').click(function(e){
           e.preventDefault();
@@ -52,21 +114,22 @@
                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
              }
          });
-            var productName = $("input[name=productName").val();
-            var price = $("input[name=price]").val();
-          jQuery.ajax({
-             url: "http://127.0.0.1:8000/api/product",
-             method: 'post',
-             data: {
-                productName: productName,
-                catalogType: jQuery('#catalogType').val(),
-                price: price
-             },
-             success: function(){
-                document.getElementById("Form").reset();
-             }});
+            var form = document.getElementById('Form');
+            var formData = new FormData(form);
+            jQuery.ajax({
+                url: "http://127.0.0.1:8000/api/product",
+                method: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(){
+                    form.reset(),
+                    location.reload()
+                }});
           });
        });
+
+
 </script>
 
 @endsection

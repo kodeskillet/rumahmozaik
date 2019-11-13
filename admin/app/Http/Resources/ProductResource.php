@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CatalogTypeResource;
 
 class ProductResource extends JsonResource
 {
@@ -18,6 +19,7 @@ class ProductResource extends JsonResource
             'id'=>$this->id,
             'productName'=>$this->productName,
             'catalogType'=>$this->catalogType,
+            'catalogName'=>$this->catalogName,
             'picture'=>$this->picture,
             'price'=>$this->price,
         ];
