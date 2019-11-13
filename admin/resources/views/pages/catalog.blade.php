@@ -60,35 +60,8 @@
 
 
 
-<script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
+{{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
 <script>
-    //    $('.delete-catalog').click(function(e){
-    //        e.preventDefault()
-    //        if(confirm('Are you sure?')){
-    //             $(e.target).closest('form').submit()
-    //        }
-    //    });
-
-    //    $(document).ready(function() {
-    //        setInterval(function() {
-    //            $('#tableCat').load('{{ action('PageController@product') }}');
-    //        }, 2000);
-    //    });
-
-    //    $(document).ready(function(){
-    //         $.getJSON("http://127.0.0.1:8000/api/catalogtype",function(data){
-    //             var catalog_data = '<tbody>';
-    //             $.each(data, function(key, value){
-    //                 catalog_data += '<tr>';
-    //                 catalog_data += '<td>'+value.id+'</td>';
-    //                 catalog_data += '<td>'+value.name+'</td>';
-    //                 catalog_data += '</tr>';
-
-    //             });
-    //             catalog_data += '</tbody>';
-    //             // console.log(data);
-    //         });
-    //    });
 
     $(document).ready(function(){
         getData();
@@ -132,6 +105,7 @@
         $.ajax({
             url: `http://127.0.0.1:8000/api/catalogtype`,
             method: 'GET',
+            dataType: 'JSON',
             success: (response) => {
                 const data = response.data;
                 data.forEach(data => {
