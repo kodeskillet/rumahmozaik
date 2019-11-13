@@ -10,16 +10,18 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { transitionName: 'slide' },
     },
     {
       path: '/about',
       name: 'about',
-      component: About
+      component: About,
+      meta: { transitionName: 'slide' },
     },
     {
       path: '*',
-      redirect: '/'
+      redirect: '/',
     }
   ]
 })

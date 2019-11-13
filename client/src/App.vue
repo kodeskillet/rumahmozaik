@@ -45,7 +45,9 @@
     </v-card>
 
     <v-content @click.native="showMenu = false">
-      <router-view/>
+      <transition name="fade" mode="out-in" @before-leave="beforeLeave" @enter="enter" @after-enter="afterEnter">
+        <router-view/>
+      </transition>
 
       <v-btn fixed dark fab bottom right class="pink-btn">
         <v-badge left>
@@ -91,7 +93,8 @@
           navigateTo: "",
         },
       ],
-      location: "HOME"
+      location: "HOME",
+      prevHeight: 0,
     }),
     watch: {
       // eslint-disable-next-line no-unused-vars
@@ -108,7 +111,22 @@
         this.$router.push(page.navigateTo);
         this.showMenu = false;
         this.location = page.title;
-      }
+      },
+      beforeLeave(element) {
+          this.prevHeight = getComputedStyle(element).height;
+      },
+      enter(element) {
+          const { height } = getComputedStyle(element);
+
+          element.style.height = this.prevHeight;
+
+          setTimeout(() => {
+              element.style.height = height;
+          });
+      },
+      afterEnter(element) {
+          element.style.height = 'auto';
+      },
     }
   }
 </script>
@@ -164,6 +182,19 @@
 
   .location-indicator {
     margin-left: 10px;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+    overflow: hidden;
+  }
+
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
   }
 
 </style>
