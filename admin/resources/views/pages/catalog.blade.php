@@ -3,13 +3,15 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-11">
+    <div class="col-md-8 offset-2">
         <div class="card">
             <div class="card-header">
-                <h5 class="title">{{_('Edit Catalog')}}</h5>
+                <h4 class="card-title">{{_('Add Catalog')}}</h4>
             </div>
             <form id = "Form">
                 <div class="card-body">
+                    @include('alerts.success')
+
                     @csrf
                     <div class="form-group{{ $errors->has('form') ? ' has-danger' : '' }}">
                         <label>{{ _('Nama Catalog') }}</label>
@@ -22,6 +24,7 @@
                 </div>
             </form>
         </div>
+
         {{-- {{var_dump($catalogs)}} --}}
         <div class="card">
             <div class="card-header">
@@ -51,14 +54,40 @@
                             @endforeach
                         </tbody>
                     </table>
+
+        <div class="col-md-8 offset-2">
+            <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title mt-0">Catalog List</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow: auto;">
+                        <table class="table table-hover" style="margin-bottom: 0 !important;">
+                            <thead class="">
+                                <tr>
+                                    <th>Nama</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table-responsive" style="overflow-x: auto; max-height: 39vh !important;">
+                        <table class="table table-hover">
+                            <tbody id="dataContainer">
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
 
 
+<script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
 <script>
     jQuery(document).ready(function(){
        jQuery('#ajaxSubmit').click(function(e){
@@ -109,5 +138,64 @@
     //         });
     //    });
 
+    $(document).ready(function(){
+        getData();
+
+        $('#ajaxSubmit').click(function(e){
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            let name = $("input[name=name]").val();
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/catalogtype",
+                method: 'post',
+                data: {
+                    name:name
+                },
+                success: function(){
+                    document.getElementById("Form").reset();
+                    getData();
+                    $.notify({
+                        icon: "tim-icons icon-bell-55",
+                        message: "New Catalog added."
+                    },{
+                        type: type['#f6383b'],
+                        timer: 5000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }
+            });
+        });
+    });
+
+    function getData() {
+        $('#dataContainer').html("");
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/catalogtype`,
+            method: 'GET',
+            success: (response) => {
+                const data = response.data;
+                data.forEach(data => {
+                    HTML =
+                        '<tr>' +
+                        '   <td>'+ data.name +'</td>' +
+                        '   <td width="50">' +
+                        '       <button class="btn btn-danger">' +
+                        '           <i class="tim-icons icon-trash-simple"></i>' +
+                        '       </button>' +
+                        '   </td>' +
+                        '</tr>';
+                    $('#dataContainer').append(HTML);
+                });
+            }
+        });
+    }
 </script>
 @endsection
