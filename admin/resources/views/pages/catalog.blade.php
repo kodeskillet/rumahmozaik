@@ -55,33 +55,6 @@
                         </tbody>
                     </table>
 
-        <div class="col-md-8 offset-2">
-            <div class="card card-plain">
-                <div class="card-header card-header-primary">
-                    <h4 class="card-title mt-0">Catalog List</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive" style="overflow: auto;">
-                        <table class="table table-hover" style="margin-bottom: 0 !important;">
-                            <thead class="">
-                                <tr>
-                                    <th>Nama</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="table-responsive" style="overflow-x: auto; max-height: 39vh !important;">
-                        <table class="table table-hover">
-                            <tbody id="dataContainer">
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 
@@ -89,27 +62,6 @@
 
 <script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
 <script>
-    jQuery(document).ready(function(){
-       jQuery('#ajaxSubmit').click(function(e){
-          e.preventDefault();
-          $.ajaxSetup({
-             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-             }
-         });
-            var name = $("input[name=name").val();
-          jQuery.ajax({
-             url: "http://127.0.0.1:8000/api/catalogtype",
-             method: 'post',
-             data: {
-                name:name
-             },
-             success: function(){
-                document.getElementById("Form").reset();
-             }});
-          });
-       });
-
     //    $('.delete-catalog').click(function(e){
     //        e.preventDefault()
     //        if(confirm('Are you sure?')){
