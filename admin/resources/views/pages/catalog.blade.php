@@ -25,8 +25,37 @@
             </form>
         </div>
 
-        {{-- {{var_dump($catalogs)}} --}}
-        <div class="card">
+        <div class="col-md-8 offset-2">
+            <div class="card card-plain">
+                <div class="card-header card-header-primary">
+                    <h4 class="card-title mt-0">Catalog List</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive" style="overflow: auto;">
+                        <table class="table table-hover" style="margin-bottom: 0 !important;">
+                            <thead class="">
+                                <tr>
+                                    <th>Nama</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="table-responsive" style="overflow-x: auto; max-height: 39vh !important;">
+                        <table class="table table-hover">
+                            <tbody id="dataContainer">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+        {{-- <div class="card">
             <div class="card-header">
                 <h5>Daftar Catalog</h5>
             </div>
@@ -56,11 +85,11 @@
                     </table>
 
     </div>
-</div>
+</div> --}}
 
 
 
-{{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
+<script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
 <script>
 
     $(document).ready(function(){
@@ -105,13 +134,12 @@
         $.ajax({
             url: `http://127.0.0.1:8000/api/catalogtype`,
             method: 'GET',
-            dataType: 'JSON',
             success: (response) => {
-                const data = response.data;
-                data.forEach(data => {
+                const data = JSON.parse(response);
+                data.forEach(function(item){
                     HTML =
                         '<tr>' +
-                        '   <td>'+ data.name +'</td>' +
+                        '   <td>'+ item.name +'</td>' +
                         '   <td width="50">' +
                         '       <button class="btn btn-danger">' +
                         '           <i class="tim-icons icon-trash-simple"></i>' +
@@ -120,6 +148,9 @@
                         '</tr>';
                     $('#dataContainer').append(HTML);
                 });
+                // data.forEach(data => {
+
+                // });
             }
         });
     }
