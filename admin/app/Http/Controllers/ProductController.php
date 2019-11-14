@@ -7,6 +7,7 @@ use App\CatalogType;
 use App\Laravue\JsonResponse;
 use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CatalogTypeResource;
 use Illuminate\Support\Facades\DB;
 
@@ -74,7 +75,9 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        //  Delete the post, return as confirmation
+        // Deleting image from storage
+        Storage::delete('public/products/'.$product->picture);
+        // Delete the post, return as confirmation
         if ($product->delete()) {
             return response()->json([
                 'message' => 'Delete Success'
