@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-md-8 offset-2">
-            <div class="card card-plain">
+            <div class="card">
                 <div class="card-header card-header-primary">
                     <h4 class="card-title mt-0">Catalog List</h4>
                 </div>
@@ -83,15 +83,21 @@
                             @endforeach
                         </tbody>
                     </table>
+                    // data.forEach(data => {
+                    // <form method="POST" action="/catalog/{{$catalog->id}}">
+                    //                     {{csrf_field()}}
+                    //                     {{method_field('DELETE')}}
+                    //                     <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
+                    //                 </form>
+                // });
 
     </div>
 </div> --}}
 
 
 
-<script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
+{{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
 <script>
-
     $(document).ready(function(){
         getData();
 
@@ -126,6 +132,10 @@
                 }
             });
         });
+
+        $("button[id=deletion]").click(function(){
+            let value = $("button[id=deletion]").val();
+            console.log(value)})
     });
 
     function getData() {
@@ -140,17 +150,14 @@
                     HTML =
                         '<tr>' +
                         '   <td>'+ item.name +'</td>' +
-                        '   <td width="50">' +
-                        '       <button class="btn btn-danger">' +
-                        '           <i class="tim-icons icon-trash-simple"></i>' +
-                        '       </button>' +
-                        '   </td>' +
+                        '       <td width="50">' +
+                        '           <button class="btn btn-danger" id="deletion" value="'+ item.id +'">' +
+                        '               <i class="tim-icons icon-trash-simple"></i>' +
+                        '           </button>' +
+                        '       </td>' +
                         '</tr>';
                     $('#dataContainer').append(HTML);
                 });
-                // data.forEach(data => {
-
-                // });
             }
         });
     }
