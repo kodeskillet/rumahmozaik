@@ -98,22 +98,14 @@
 
 
 <script>
-            $('#inputGroupFile01').on('change',function(){
-                //get the file name
-                var fileName = $(this).val();
-                fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length);
-                //replace the "Choose a file" label
-                $(this).next('.custom-file-label').html(fileName);
-            })
-
     jQuery(document).ready(function(){
        jQuery('#ajaxSubmit').click(function(e){
-          e.preventDefault();
-          $.ajaxSetup({
-             headers: {
-                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-             }
-         });
+            e.preventDefault();
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
             var form = document.getElementById('Form');
             var formData = new FormData(form);
             jQuery.ajax({
@@ -125,10 +117,57 @@
                 success: function(){
                     form.reset(),
                     location.reload()
-                }});
-          });
-       });
+                }
+            });
+        });
+    });
 
+    function getData(){
+        $('#dataContainer').html("");
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/product`,
+            method: 'get',
+            success: (response) => {
+                const data = JSON.parse(response);
+                data.forEach(function(item)){
+                    HTML =
+                }
+            }
+        })
+    }
+
+    function getData() {
+        $('#dataContainer').html("");
+
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/catalogtype`,
+            method: 'GET',
+            success: (response) => {
+                const data = JSON.parse(response);
+                data.forEach(function(item){
+                    HTML =
+                        '<tr>' +
+                        '   <td>'+ item.name +'</td>' +
+                        '       <td width="50">' +
+                        '           <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
+                        '               <i class="tim-icons icon-trash-simple"></i>' +
+                        '           </button>' +
+                        '       </td>' +
+                        '</tr>';
+                    $('#dataContainer').append(HTML);
+                });
+            }
+        });
+    }
+
+    $('#inputGroupFile01').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        fileName = fileName.substring(fileName.lastIndexOf("\\")+1, fileName.length);
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+    })
 
 </script>
 
