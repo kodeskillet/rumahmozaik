@@ -132,11 +132,38 @@
                 }
             });
         });
-
-        $("button[id=deletion]").click(function(){
-            let value = $("button[id=deletion]").val();
-            console.log(value)})
     });
+
+    function deletion(id){
+        if(confirm("Are you sure to delete this record ?")){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/catalogtype/`+id,
+                method: 'delete',
+                data: id,
+                success: function(){
+                    getData();
+                    $.notify({
+                        icon: "tim-icons icon-bell-55",
+                        message: "New Catalog removed."
+                    },{
+                        type: type['#f6383b'],
+                        timer: 5000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }
+            });
+        }
+    }
 
     function getData() {
         $('#dataContainer').html("");
@@ -151,7 +178,7 @@
                         '<tr>' +
                         '   <td>'+ item.name +'</td>' +
                         '       <td width="50">' +
-                        '           <button class="btn btn-danger" id="deletion" value="'+ item.id +'">' +
+                        '           <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
                         '               <i class="tim-icons icon-trash-simple"></i>' +
                         '           </button>' +
                         '       </td>' +
