@@ -74,8 +74,8 @@
                                 Action
                             </th>
                         </thead>
-                        <tbody>
-                            @foreach($products as $product)
+                        <tbody id="dataContainer">
+                            {{-- @foreach($products as $product)
                                 <tr>
                                     <td><img src="{{asset('/storage/products').'/'.$product->picture}}" alt="{{$product->productName}}" width="75" height="75"></td>
                                     <td>{{$product->productName}}</td>
@@ -88,7 +88,7 @@
                                     </form>
                                 </tr>
                             @endforeach
-                            {{-- var_dump($products) --}}
+                            var_dump($products) --}}
                         </tbody>
                     </table>
                 </div>
@@ -99,7 +99,8 @@
 
 <script>
     jQuery(document).ready(function(){
-       jQuery('#ajaxSubmit').click(function(e){
+        getData();
+        jQuery('#ajaxSubmit').click(function(e){
             e.preventDefault();
             $.ajaxSetup({
                 headers: {
@@ -130,36 +131,48 @@
             method: 'get',
             success: (response) => {
                 const data = JSON.parse(response);
-                data.forEach(function(item)){
-                    HTML =
-                }
-            }
-        })
-    }
-
-    function getData() {
-        $('#dataContainer').html("");
-
-        $.ajax({
-            url: `http://127.0.0.1:8000/api/catalogtype`,
-            method: 'GET',
-            success: (response) => {
-                const data = JSON.parse(response);
                 data.forEach(function(item){
                     HTML =
                         '<tr>' +
-                        '   <td>'+ item.name +'</td>' +
-                        '       <td width="50">' +
-                        '           <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
-                        '               <i class="tim-icons icon-trash-simple"></i>' +
-                        '           </button>' +
-                        '       </td>' +
+                        '<td><img src="'+ asset("/storage/products")+ "/" + item.picture +'" alt="' + item.name + '" width = "75" height = "75">' + '</td>'+
+                        '<td>' + item.name + '</td>' +
+                        '<td>' + item.catalogName.name + '</td>' +
+                        '<td>' + item.price + '</td>' +
+                        '<td width="50">' +
+                        '   <button class="btn btn-danger" id="deletion_'+ item.id +'>' +
+                        '       <i class="tim-icons icon-trash-simple"></i>' +
+                        '   </button>' +
+                        '</td>' +
                         '</tr>';
                     $('#dataContainer').append(HTML);
                 });
             }
-        });
+        })
     }
+
+    // function getData() {
+    //     $('#dataContainer').html("");
+
+    //     $.ajax({
+    //         url: `http://127.0.0.1:8000/api/catalogtype`,
+    //         method: 'GET',
+    //         success: (response) => {
+    //             const data = JSON.parse(response);
+    //             data.forEach(function(item){
+    //                 HTML =
+    //                     '<tr>' +
+    //                     '   <td>'+ item.name +'</td>' +
+    //                     '       <td width="50">' +
+    //                     '           <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
+    //                     '               <i class="tim-icons icon-trash-simple"></i>' +
+    //                     '           </button>' +
+    //                     '       </td>' +
+    //                     '</tr>';
+    //                 $('#dataContainer').append(HTML);
+    //             });
+    //         }
+    //     });
+    // }
 
     $('#inputGroupFile01').on('change',function(){
         //get the file name
