@@ -26,7 +26,7 @@
         </div>
 
         <div class="col-md-8 offset-2">
-            <div class="card card-plain">
+            <div class="card">
                 <div class="card-header card-header-primary">
                     <h4 class="card-title mt-0">Catalog List</h4>
                 </div>
@@ -83,15 +83,21 @@
                             @endforeach
                         </tbody>
                     </table>
+                    // data.forEach(data => {
+                    // <form method="POST" action="/catalog/{{$catalog->id}}">
+                    //                     {{csrf_field()}}
+                    //                     {{method_field('DELETE')}}
+                    //                     <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
+                    //                 </form>
+                // });
 
     </div>
 </div> --}}
 
 
 
-<script src="../../../node_modules/paginationjs/dist/pagination.js"></script>
+{{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
 <script>
-
     $(document).ready(function(){
         getData();
 
@@ -128,6 +134,37 @@
         });
     });
 
+    function deletion(id){
+        if(confirm("Are you sure to delete this record ?")){
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            })
+
+            $.ajax({
+                url: `http://127.0.0.1:8000/api/catalogtype/`+id,
+                method: 'delete',
+                data: id,
+                success: function(){
+                    getData();
+                    $.notify({
+                        icon: "tim-icons icon-bell-55",
+                        message: "New Catalog removed."
+                    },{
+                        type: type['#f6383b'],
+                        timer: 5000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     function getData() {
         $('#dataContainer').html("");
 
@@ -140,17 +177,14 @@
                     HTML =
                         '<tr>' +
                         '   <td>'+ item.name +'</td>' +
-                        '   <td width="50">' +
-                        '       <button class="btn btn-danger">' +
-                        '           <i class="tim-icons icon-trash-simple"></i>' +
-                        '       </button>' +
-                        '   </td>' +
+                        '       <td width="50">' +
+                        '           <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
+                        '               <i class="tim-icons icon-trash-simple"></i>' +
+                        '           </button>' +
+                        '       </td>' +
                         '</tr>';
                     $('#dataContainer').append(HTML);
                 });
-                // data.forEach(data => {
-
-                // });
             }
         });
     }
