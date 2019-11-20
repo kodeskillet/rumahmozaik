@@ -134,11 +134,12 @@
                 data.forEach(function(item){
                     HTML =
                         '<tr>' +
-                        '<td><img src="'+ asset("/storage/products")+ "/" + item.picture +'" alt="' + item.name + '" width = "75" height = "75">' + '</td>'+
-                        '<td>' + item.name + '</td>' +
+                        '<td> Tes </td>' +
+                        // '<td><img src="'+ asset("/storage/products")+ "/" + item.picture +'" alt="' + item.name + '" width = "75" height = "75">' + '</td>'+
+                        '<td>' + item.productName + '</td>' +
                         '<td>' + item.catalogName.name + '</td>' +
                         '<td>' + item.price + '</td>' +
-                        '<td width="50">' +
+                        '<td width="60">' +
                         '   <button class="btn btn-danger" id="deletion_'+ item.id +'>' +
                         '       <i class="tim-icons icon-trash-simple"></i>' +
                         '   </button>' +
