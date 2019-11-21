@@ -116,8 +116,19 @@
                 processData: false,
                 contentType: false,
                 success: function(){
-                    form.reset(),
-                    location.reload()
+                    document.getElementById("Form").reset();
+                    getData();
+                    $.notify({
+                        icon: "tim-icons icon-bell-55",
+                        message: "New Product added."
+                    },{
+                        type: type['#f6383b'],
+                        timer: 5000,
+                        placement: {
+                            from: 'top',
+                            align: 'center'
+                        }
+                    });
                 }
             });
         });
