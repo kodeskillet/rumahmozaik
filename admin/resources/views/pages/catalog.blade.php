@@ -54,48 +54,6 @@
     </div>
 </div>
 
-
-        {{-- <div class="card">
-            <div class="card-header">
-                <h5>Daftar Catalog</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table" id="tableCat">
-                        <thead>
-                            <th>
-                                Nama Catalog
-                            </th>
-                            <th>
-                                Action
-                            </th>
-                        </thead>
-                        <tbody>
-                            @foreach($catalogs as $catalog)
-                                <tr>
-                                    <td>{{$catalog->name}}</td>
-                                    <form method="POST" action="/catalog/{{$catalog->id}}">
-                                        {{csrf_field()}}
-                                        {{method_field('DELETE')}}
-                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
-                                    </form>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    // data.forEach(data => {
-                    // <form method="POST" action="/catalog/{{$catalog->id}}">
-                    //                     {{csrf_field()}}
-                    //                     {{method_field('DELETE')}}
-                    //                     <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
-                    //                 </form>
-                // });
-
-    </div>
-</div> --}}
-
-
-
 {{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
 <script>
     $(document).ready(function(){
