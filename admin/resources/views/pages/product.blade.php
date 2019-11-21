@@ -74,8 +74,14 @@
                 </div>
             </div>
     </div>
+
+{{-- This is modal line --}}
+
+<div>
+
 </div>
 
+{{-- This is end of modal line --}}
 
 <script>
     jQuery(document).ready(function(){
@@ -160,7 +166,10 @@
                         '<td>' + item.productName + '</td>' +
                         '<td>' + item.catalogName.name + '</td>' +
                         '<td>' + item.price + '</td>' +
-                        '<td>' +
+                        '<td width = "210">' +
+                        '   <button class="btn btn-success" id="deletion_'+ item.id +'" onclick="edit('+ item.id +')">' +
+                        '       <i class="tim-icons icon-pencil"></i>' +
+                        '    </button>' +
                         '   <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
                         '       <i class="tim-icons icon-trash-simple"></i>' +
                         '    </button>' +
