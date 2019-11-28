@@ -76,7 +76,10 @@
     </div>
 
 {{-- This is modal line --}}
-<form enctype="multipart/form-data" id="formModal" class="modal">
+<div id="ex" class="modal">
+    <p>Example Modal</p>
+</div>
+{{-- <form enctype="multipart/form-data" id="formModal" class="modal">
     <div class="card-body">
         @csrf
         @method('post')
@@ -110,7 +113,7 @@
     <div class="card-footer">
         <button class="btn btn-fill btn-primary" id="ajaxSubmit">{{ _('Save') }}</button>
     </div>
-</form>
+</form> --}}
 {{-- This is end of modal line --}}
 
 <script>
@@ -212,7 +215,7 @@
     }
 
     function edit(id){
-        $("#form").modal();
+        $("#ex").modal('show');
     }
 
     $('#inputGroupFile01').on('change',function(){
