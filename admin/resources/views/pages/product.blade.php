@@ -75,10 +75,22 @@
             </div>
     </div>
 
-{{-- This is modal line --}}
-<div id="ex" class="modal">
-    <p>Example Modal</p>
-</div>
+    {{-- Modal start --}}
+
+    <div class="modal" id="modal">
+        <div class="modal-header">
+            <p>Testing</p>
+        </div>
+        <div class="modal-content">
+            <p>This the content</p>
+        </div>
+        <div class="modal-footer">
+            <p>This is the footer</p>
+        </div>
+    </div>
+
+    {{-- Modal end --}}
+
 {{-- <form enctype="multipart/form-data" id="formModal" class="modal">
     <div class="card-body">
         @csrf
@@ -200,7 +212,7 @@
                         '<td>' + item.catalogName.name + '</td>' +
                         '<td>' + item.price + '</td>' +
                         '<td width = "210">' +
-                        '   <button class="btn btn-success" id="deletion_'+ item.id +'" onclick="edit('+ item.id +')">' +
+                        '   <button class="btn btn-success" id="edit_'+ item.id +'" onclick="edit('+ item.id +')">' +
                         '       <i class="tim-icons icon-pencil"></i>' +
                         '    </button>' +
                         '   <button class="btn btn-danger" id="deletion_'+ item.id +'" onclick="deletion('+ item.id +')">' +
@@ -215,7 +227,7 @@
     }
 
     function edit(id){
-        $("#ex").modal('show');
+        $("#modal").modal();
     }
 
     $('#inputGroupFile01').on('change',function(){
