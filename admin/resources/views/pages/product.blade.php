@@ -28,6 +28,10 @@
                         <label>{{_('Harga')}}</label>
                         <input type="number" name="price" class="form-control{{ $errors->has('price') ? ' is-invalid' : '' }}" placeholder="{{ _('Harga') }}">
                         @include('alerts.feedback', ['field' => 'price'])
+                        {{-- <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile02" name="picture">
+                            <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                        </div> --}}
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text">Upload</span>
@@ -38,6 +42,8 @@
                             </div>
                         </div>
                     </div>
+                    {{-- <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Name') }}" value="{{ old('name', auth()->user()->name) }}">
+                                @include('alerts.feedback', ['field' => 'name']) --}}
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-fill btn-primary" id="ajaxSubmit">{{ _('Save') }}</button>
@@ -69,6 +75,20 @@
                             </th>
                         </thead>
                         <tbody id="dataContainer">
+                            {{-- @foreach($products as $product)
+                                <tr>
+                                    <td><img src="{{asset('/storage/products').'/'.$product->picture}}" alt="{{$product->productName}}" width="75" height="75"></td>
+                                    <td>{{$product->productName}}</td>
+                                    <td>{{$product->catalogName->name}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <form method="POST" action="/product/{{$product->id}}">
+                                        {{csrf_field()}}
+                                        {{method_field('DELETE')}}
+                                        <td><button type="submit" class="btn btn-fill btn-danger delete-catalog" onclick="return confirm('Are you sure?')"><i class="tim-icons icon-simple-delete"></i></button></td>
+                                    </form>
+                                </tr>
+                            @endforeach
+                            var_dump($products) --}}
                         </tbody>
                     </table>
                 </div>
