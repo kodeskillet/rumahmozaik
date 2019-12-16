@@ -149,12 +149,14 @@
     position: absolute;
     margin-top: 75px;
     margin-left: 12px;
-    opacity: 0;
-    transition: all .3s ease-in-out;
+    opacity: 1;
+    left: -270px;
+    transition: all .2s ease-in-out;
   }
 
   .shown {
     opacity: 1;
+    left: 0;
   }
 
   .active {
