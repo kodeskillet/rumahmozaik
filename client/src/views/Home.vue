@@ -59,7 +59,6 @@
         </v-col>
       </v-row>
     </v-container>
-
   </section>
 </template>
 

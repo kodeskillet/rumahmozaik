@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     },
     fillCatalog (state, catalogs) {
       state.catalogs = catalogs
-    } },
+    } 
+  },
   actions: {
     fillProduct ({commit}, products) {
       commit('fillProduct', products)

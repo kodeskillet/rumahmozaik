@@ -3,9 +3,7 @@
     <v-app-bar app>
       <div class="menu-section" @click="showMenu = !showMenu">
         <div @click="showMenu = !showMenu">
-          <v-icon @click="showMenu = !showMenu" :class="{active: showMenu}">
-            {{ menuIcon }}
-          </v-icon>
+          <v-icon @click="showMenu = !showMenu" :class="{active: showMenu}">{{ menuIcon }}</v-icon>
         </div>
         <div class="location-indicator">
           <v-toolbar-title class="text-uppercase" :class="{active: showMenu}">
@@ -22,16 +20,10 @@
       </v-toolbar-title>
     </v-app-bar>
 
-    <v-card class="menu-list"
-            :class="{shown: showMenu}"
-            elevation="12"
-            width="256">
+    <v-card class="menu-list" :class="{shown: showMenu}" elevation="12" width="256">
       <v-navigation-drawer floating permanent>
         <v-list dense rounded>
-          <v-list-item v-for="item in menuItems"
-                       :key="item.title"
-                       @click="navigator(item)"
-          >
+          <v-list-item v-for="item in menuItems" :key="item.title" @click="navigator(item)">
             <v-list-item-icon>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-icon>
@@ -45,7 +37,13 @@
     </v-card>
 
     <v-content @click.native="showMenu = false">
-      <transition name="fade" mode="out-in" @before-leave="beforeLeave" @enter="enter" @after-enter="afterEnter">
+      <transition
+        name="fade"
+        mode="out-in"
+        @before-leave="beforeLeave"
+        @enter="enter"
+        @after-enter="afterEnter"
+      >
         <router-view/>
       </transition>
 
@@ -57,6 +55,22 @@
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>
+      <v-footer padless>
+        <v-row justify="center" no-gutters>
+          <v-btn
+            v-for="link in links"
+            :key="link"
+            color="white"
+            text
+            rounded
+            class="my-2"
+          >{{ link }}</v-btn>
+          <v-col class="red accent-2 py-4 text-center white--text" cols="12">
+            {{ new Date().getFullYear() }} —
+            <strong>Kodeskillet</strong>
+          </v-col>
+        </v-row>
+      </v-footer>
     </v-content>
   </v-app>
 </template>
@@ -122,46 +136,69 @@
         this.showMenu = false;
         this.location = page.title;
       },
-      beforeLeave(element) {
-          this.prevHeight = getComputedStyle(element).height;
+      {
+        icon: "mdi-package-variant-closed",
+        title: "Products",
+        navigateTo: "/products"
       },
-      enter(element) {
-          const { height } = getComputedStyle(element);
-
-          element.style.height = this.prevHeight;
-
-          setTimeout(() => {
-              element.style.height = height;
-          });
+      {
+        icon: "mdi-brush",
+        title: "Designs",
+        navigateTo: "/design"
       },
-      afterEnter(element) {
-          element.style.height = 'auto';
+      {
+        icon: "mdi-information-outline",
+        title: "About",
+        navigateTo: "/about"
       },
-
-      async fillProducts() {
-        let store = this.$store
-        await Api.product.getAll().then(response => {
-          store.dispatch('fillProduct', response.data)
-        }).catch(err => {
-          // eslint-disable-next-line no-console
-          console.log(err)
-        })
-      },
-
-      async fillCatalogs() {
-        let store = this.$store
-        await Api.catalog.getAll().then(response => {
-          store.dispatch('fillCatalog', response.data)
-        }).catch(err => {
-          // eslint-disable-next-line no-console
-          console.log(err)
-        })
+      {
+        icon: "mdi-email",
+        title: "Contact",
+        navigateTo: "/contact"
+      }
+    ],
+    location: "HOME",
+    prevHeight: 0
+  }),
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    showMenu(newVal, oldVal) {
+      if (newVal) {
+        this.menuIcon = "mdi-menu-open";
+      } else {
+        this.menuIcon = "mdi-menu";
       }
     }
+  },
+  methods: {
+    navigator(page) {
+      this.$router.push(page.navigateTo);
+      this.showMenu = false;
+      this.location = page.title;
+    },
+    beforeLeave(element) {
+      this.prevHeight = getComputedStyle(element).height;
+    },
+    enter(element) {
+      const { height } = getComputedStyle(element);
+
+      element.style.height = this.prevHeight;
+
+      setTimeout(() => {
+        element.style.height = height;
+      });
+    },
+    afterEnter(element) {
+      element.style.height = "auto";
+    }
   }
+};
 </script>
 
 <style>
+  html {
+    overflow: hidden;
+  }
   .deep-pink {
     color: #e84242;
   }
@@ -237,5 +274,4 @@
   .fade-leave-active {
     opacity: 0
   }
-
 </style>
