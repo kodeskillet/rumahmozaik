@@ -1,6 +1,7 @@
 <template>
   <section class="product">
 <!--    Bapak Ayib edit edit disini-->
+    <h1>This is an Product page</h1>
   </section>
 </template>
 

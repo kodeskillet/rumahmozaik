@@ -1,6 +1,7 @@
 <template>
   <section class="design">
     <!--    Bapak Ayib edit edit disini-->
+    <h1>This is an Design page</h1>
   </section>
 </template>
 

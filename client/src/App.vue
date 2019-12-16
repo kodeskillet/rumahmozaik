@@ -75,12 +75,12 @@
         {
           icon: "mdi-package-variant-closed",
           title: "Products",
-          navigateTo: "",
+          navigateTo: "/products",
         },
         {
           icon: "mdi-brush",
           title: "Designs",
-          navigateTo: "",
+          navigateTo: "/design",
         },
         {
           icon: "mdi-information-outline",
@@ -90,7 +90,7 @@
         {
           icon: "mdi-email",
           title: "Contact",
-          navigateTo: "",
+          navigateTo: "/contact",
         },
       ],
       location: "HOME",

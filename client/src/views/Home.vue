@@ -4,8 +4,8 @@
       <v-carousel-item v-for="(color, i) in colors"
                        :key="color">
         <v-sheet :color="color"
-                height="100%"
-                tile>
+                 height="100%"
+                 tile>
           <v-row class="fill-height"
                  align="center"
                  justify="center">
@@ -14,6 +14,11 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
+    <v-row>
+      <v-col>
+
+      </v-col>
+    </v-row>
   </section>
 </template>
 
