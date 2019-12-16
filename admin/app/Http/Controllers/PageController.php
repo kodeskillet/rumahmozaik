@@ -65,6 +65,7 @@ class PageController extends Controller
         $product = json_decode($product->show($id));
         $catalog = json_decode($catalog->index());
         return view('pages.productEdit', compact('product', 'catalog'));
+        // return $product;
     }
 
     public function productUpdate(ProductController $product, $id)

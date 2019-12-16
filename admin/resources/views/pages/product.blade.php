@@ -15,7 +15,7 @@
 
                     <div class="form-group{{ $errors->has('form') ? ' has-danger' : '' }}">
                         <label>{{ _('Nama Produk') }}</label>
-                        <input type="text" name="productName" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Produk') }}">
+                        <input type="text" name="productName" class="form-control{{ $errors->has('productName') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Produk') }}" autocomplete="off">
                         @include('alerts.feedback', ['field' => 'product'])
 
                         <label>{{_('Tipe Produk')}}</label>
@@ -120,13 +120,11 @@
 
     function deletion(id){
         if(confirm("Are you sure to delete this record ?")){
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             })
-
             $.ajax({
                 url: `http://127.0.0.1:8000/api/product/`+id,
                 method: 'delete',
@@ -147,6 +145,21 @@
                 }
             });
         }
+    }
+
+    function edit(id){
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')}
+        })
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/product/`+id,
+            method: 'GET',
+            data: id,
+            success: (response) => {
+                const data = JSON.parse(response)
+
+            }
+        })
     }
 
     function getData(){
@@ -178,6 +191,8 @@
             }
         })
     }
+
+
 
     $('#inputGroupFile01').on('change',function(){
         //get the file name

@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'PageController@tables']);
 		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
         Route::get('product', ['as' => 'pages.product', 'uses' => 'PageController@product']);
+        Route::get('product/edit/{id}', ['as' => 'pages.product.edit', 'uses' => 'PageController@productEdit']);
         Route::delete('product/{id}',['as' => 'pages.productDelete','uses' =>'PageController@productDelete']);
         Route::get('catalog', ['as' => 'pages.catalog', 'uses' => 'PageController@catalog']);
         Route::delete('catalog/{id}', ['as' => 'pages.catalogDelete', 'uses' => 'PageController@catalogDelete']);

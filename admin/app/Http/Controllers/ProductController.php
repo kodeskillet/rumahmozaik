@@ -60,13 +60,11 @@ class ProductController extends Controller
     public function show ($id)
     {
         $product = Product::findOrFail($id);
-        foreach($product as $aproduct){
-            $aproduct->catalogName = DB::table('catalog_type')
+        $product->catalogName =$product->catalogName = DB::table('catalog_type')
                 ->select('name')
-                ->where('id',$aproduct->catalogType)
+                ->where('id',$product->catalogType)
                 ->first();
-        }
-        $json = json_encode(ProductResource::collection($product));
+        $json = json_encode(new ProductResource($product));
         return $json;
     }
 
