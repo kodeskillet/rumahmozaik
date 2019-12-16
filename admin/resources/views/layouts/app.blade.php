@@ -7,6 +7,8 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" >
+
         <title>{{ config('app.name', 'White Dashboard') }}</title>
         <!-- Favicon -->
         <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('white') }}/img/apple-icon.png">

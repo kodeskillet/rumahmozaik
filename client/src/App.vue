@@ -11,7 +11,7 @@
           </v-toolbar-title>
         </div>
       </div>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
         <span class="quote">All About Design</span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -76,15 +76,65 @@
 </template>
 
 <script>
-export default {
-  data: () => ({
-    showMenu: false,
-    menuIcon: "mdi-menu",
-    menuItems: [
-      {
-        icon: "mdi-home",
-        title: "Home",
-        navigateTo: "/"
+  import {mapState} from 'vuex'
+  import Api from "./services/Api";
+
+  export default {
+    data: () => ({
+      showMenu: false,
+      menuIcon: "mdi-menu",
+      menuItems: [
+        {
+          icon: "mdi-home",
+          title: "Home",
+          navigateTo: "/",
+        },
+        {
+          icon: "mdi-package-variant-closed",
+          title: "Products",
+          navigateTo: "",
+        },
+        {
+          icon: "mdi-brush",
+          title: "Designs",
+          navigateTo: "",
+        },
+        {
+          icon: "mdi-information-outline",
+          title: "About",
+          navigateTo: "/about",
+        },
+        {
+          icon: "mdi-email",
+          title: "Contact",
+          navigateTo: "",
+        },
+      ],
+      location: "HOME",
+      prevHeight: 0,
+
+      allProducts: null
+    }),
+    mounted() {
+      this.fillProducts()
+      this.fillCatalogs()
+    },
+    computed: mapState(['products', 'catalogs']),
+    watch: {
+      // eslint-disable-next-line no-unused-vars
+      showMenu(newVal, oldVal) {
+        if (newVal) {
+          this.menuIcon = "mdi-menu-open"
+        } else {
+          this.menuIcon = "mdi-menu"
+        }
+      }
+    },
+    methods: {
+      navigator(page) {
+        this.$router.push(page.navigateTo);
+        this.showMenu = false;
+        this.location = page.title;
       },
       {
         icon: "mdi-package-variant-closed",
@@ -101,6 +151,7 @@ export default {
         title: "About",
         navigateTo: "/about"
       },
+
       {
         icon: "mdi-email",
         title: "Contact",
@@ -161,56 +212,58 @@ html {
 </style>
 
 <style scoped>
-.menu-list {
-  z-index: 9999;
-  position: absolute;
-  margin-top: 75px;
-  margin-left: 12px;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
+  .menu-list {
+    z-index: 9999;
+    position: absolute;
+    margin-top: 75px;
+    margin-left: 12px;
+    opacity: 1;
+    left: -270px;
+    transition: all .2s ease-in-out;
+  }
 
-.shown {
-  opacity: 1;
-}
+  .shown {
+    opacity: 1;
+    left: 0;
+  }
 
-.active {
-  color: #ee8181 !important;
-}
+  .active {
+    color: #ee8181 !important;
+  }
 
-span.quote {
-  font-size: 0.9rem;
-  color: #999 !important;
-}
+  span.quote {
+    font-size: .9rem;
+    color: #999 !important;
+  }
 
-span.separator {
-  color: #bbb !important;
-}
+  span.separator {
+    color: #bbb !important;
+  }
 
-.menu-section {
-  display: flex;
-  padding: 10px;
-}
+  .menu-section {
+    display: flex;
+    padding: 10px
+  }
 
-.menu-section div {
-  display: inline-flex;
-  cursor: pointer;
-}
+  .menu-section div {
+    display: inline-flex;
+    cursor: pointer;
+  }
 
-.location-indicator {
-  margin-left: 10px;
-}
+  .location-indicator {
+    margin-left: 10px;
+  }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.3s;
-  transition-property: opacity;
-  transition-timing-function: ease;
-  overflow: hidden;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition-duration: 0.3s;
+    transition-property: opacity;
+    transition-timing-function: ease;
+    overflow: hidden;
+  }
 
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
-}
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0
+  }
 </style>

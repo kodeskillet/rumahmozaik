@@ -60,10 +60,19 @@ class PageController extends Controller
         return redirect()->action('PageController@product');
     }
 
-    // public function productStore(ProductController $products)
-    // {
+    public function productEdit(CatalogTypeController $catalog, ProductController $product, $id)
+    {
+        $product = json_decode($product->show($id));
+        $catalog = json_decode($catalog->index());
+        return view('pages.productEdit', compact('product', 'catalog'));
+        // return $product;
+    }
 
-    // }
+    public function productUpdate(ProductController $product, $id)
+    {
+        $product = $product->edit($id);
+        return redirect()->action('PageController@product');
+    }
 
     public function catalog(CatalogTypeController $catalogs)
     {
