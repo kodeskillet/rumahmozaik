@@ -15,7 +15,7 @@
                     @csrf
                     <div class="form-group{{ $errors->has('form') ? ' has-danger' : '' }}">
                         <label>{{ _('Nama Catalog') }}</label>
-                        <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Catalog') }}">
+                        <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ _('Nama Catalog') }}" autocomplete="off">
                         @include('alerts.feedback', ['field' => 'name'])
                     </div>
                     <div class="card-footer">
@@ -54,11 +54,9 @@
     </div>
 </div>
 
-{{-- <script src="../../../node_modules/paginationjs/dist/pagination.js"></script> --}}
 <script>
     $(document).ready(function(){
         getData();
-
         $('#ajaxSubmit').click(function(e){
             e.preventDefault();
             $.ajaxSetup({
@@ -94,13 +92,11 @@
 
     function deletion(id){
         if(confirm("Are you sure to delete this record ?")){
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 }
             })
-
             $.ajax({
                 url: `http://127.0.0.1:8000/api/catalogtype/`+id,
                 method: 'delete',
@@ -125,7 +121,6 @@
 
     function getData() {
         $('#dataContainer').html("");
-
         $.ajax({
             url: `http://127.0.0.1:8000/api/catalogtype`,
             method: 'GET',

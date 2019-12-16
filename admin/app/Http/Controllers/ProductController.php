@@ -26,14 +26,6 @@ class ProductController extends Controller
         }
         $json = json_encode(ProductResource::collection($product));
         return $json;
-
-
-        // $json = json_encode($product);
-        // return $json;
-        // $json = json_decode($json);
-        // foreach($json as $data){
-        //     var_dump($data->productName);
-        // }
     }
 
     public function store(Request $request)
@@ -68,7 +60,12 @@ class ProductController extends Controller
     public function show ($id)
     {
         $product = Product::findOrFail($id);
-        return json_encode($product);
+        $product->catalogName =$product->catalogName = DB::table('catalog_type')
+                ->select('name')
+                ->where('id',$product->catalogType)
+                ->first();
+        $json = json_encode(new ProductResource($product));
+        return $json;
     }
 
     public function destroy($id)
