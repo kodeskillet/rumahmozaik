@@ -80,7 +80,55 @@
                 </div>
             </div>
     </div>
-
+    <div id="editModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">Edit Product</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="productName">Product Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="productName" name="productName" autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="catalogType">Tipe Produk:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="catalogType" name="catalogType">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="price">Harga:</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="price" name="price">
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Upload</span>
+                            </div>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="inputGroupFile02" name="picture">
+                              <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary edit" data-dismiss="modal">
+                            <span class='glyphicon glyphicon-check'></span> Edit
+                        </button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">
+                            <span class='glyphicon glyphicon-remove'></span> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <script>
     jQuery(document).ready(function(){
         getData();
