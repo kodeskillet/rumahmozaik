@@ -15,7 +15,7 @@
       </div>
       <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="quote">All About Design</span>
+        <span class="quote">everything about design</span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
         <span class="deep-pink">RUMAH</span>
         <span class="font-weight-light light-pink">MOZAIK</span>
@@ -151,7 +151,7 @@
       async fillCatalogs() {
         let store = this.$store
         await Api.catalog.getAll().then(response => {
-          store.dispatch('fillCatalogs', response.data)
+          store.dispatch('fillCatalog', response.data)
         }).catch(err => {
           // eslint-disable-next-line no-console
           console.log(err)
@@ -168,15 +168,24 @@
   .light-pink {
     color: #ee8181;
   }
+  .deep-blue {
+    color: #3c8dba !important;
+  }
+  .bright-blue {
+    color: #91c9e2 !important;
+  }
   .pink-btn {
     background: #fb4444 !important;
+  }
+  .bg-light-pink {
+    background-color: #eea6a6 !important;
   }
 </style>
 
 <style scoped>
   .menu-list {
     z-index: 9999;
-    position: absolute;
+    position: fixed;
     margin-top: 75px;
     margin-left: 12px;
     opacity: 1;
