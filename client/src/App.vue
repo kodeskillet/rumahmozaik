@@ -13,7 +13,7 @@
           </v-toolbar-title>
         </div>
       </div>
-      <v-spacer></v-spacer>
+      <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
         <span class="quote">All About Design</span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
@@ -62,6 +62,9 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex'
+  import Api from "./services/Api";
+
   export default {
     data: () => ({
       showMenu: false,
@@ -95,7 +98,14 @@
       ],
       location: "HOME",
       prevHeight: 0,
+
+      allProducts: null
     }),
+    mounted() {
+      this.fillProducts()
+      this.fillCatalogs()
+    },
+    computed: mapState(['products', 'catalogs']),
     watch: {
       // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
@@ -127,6 +137,26 @@
       afterEnter(element) {
           element.style.height = 'auto';
       },
+
+      async fillProducts() {
+        let store = this.$store
+        await Api.product.getAll().then(response => {
+          store.dispatch('fillProduct', response.data)
+        }).catch(err => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+        })
+      },
+
+      async fillCatalogs() {
+        let store = this.$store
+        await Api.catalog.getAll().then(response => {
+          store.dispatch('fillCatalogs', response.data)
+        }).catch(err => {
+          // eslint-disable-next-line no-console
+          console.log(err)
+        })
+      }
     }
   }
 </script>

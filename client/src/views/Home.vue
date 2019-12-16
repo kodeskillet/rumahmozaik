@@ -1,5 +1,5 @@
 <template>
-  <div class="Home">
+  <section class="home">
     <v-carousel hide-delimiters cycle show-arrows-on-hover>
       <v-carousel-item v-for="(color, i) in colors"
                        :key="color">
@@ -14,7 +14,14 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
-  </div>
+
+    <v-row>
+      <v-col>
+
+      </v-col>
+    </v-row>
+
+  </section>
 </template>
 
 <script>
