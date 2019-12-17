@@ -9,7 +9,7 @@
     <v-container fluid class="mb-12">
       <v-row justify="center">
         <v-col lg="6">
-          <h1 class="display-4">
+          <h1 class="display-3">
             <span class="deep-pink font-weight-regular">RUMAH</span>
             <span class="light-pink font-weight-thin">MOZAIK</span>
           </h1>
@@ -22,7 +22,6 @@
             <span class="bright-blue">MOZAIK</span>, we explore the best approach to <br/>
             fulfill your needs for any events, occasions, and celebrations.
           </p>
-
           <p class="title mt-2 font-weight-light pr-12 text-right">
             We create the most beautiful work of art within the digital universe<br/>
             penetrating the boundaries between art and science and making the two even.
@@ -45,16 +44,21 @@
                  max-width="500"
                  max-height="300"/>
         </v-col>
-        <v-col lg="6" style="padding-top: 5%">
+        <v-col lg="6" style="padding-top: 3%">
           <h2 class>
             <span class="display-2 font-weight-light">Over </span>
-            <span class="display-3 deep-blue font-weight-bold">100.000+ </span>
-            <span class="display-2 font-weight-light">customers</span>
+            <span class="display-3 deep-pink font-weight-bold">1000+ </span>
+            <span class="display-2 font-weight-thin">customers worldwide</span>
           </h2>
           <h2>
             <span class="display-2 font-weight-light">And </span>
-            <span class="display-3 bright-blue font-weight-bold">50+ </span>
-            <span class="display-2 font-weight-light">resellers have trusted our service</span>
+            <span class="display-3 deep-blue font-weight-bold">50+ </span>
+            <span class="display-2 font-weight-thin">resellers trusted our service</span>
+          </h2>
+          <h2>
+            <span class="display-2 font-weight-light">In </span>
+            <span class="display-3 bright-blue font-weight-bold">10+ </span>
+            <span class="display-2 font-weight-thin">E - Commerce platforms</span>
           </h2>
         </v-col>
       </v-row>

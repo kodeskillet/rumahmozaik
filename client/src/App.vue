@@ -13,7 +13,7 @@
       </div>
       <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="quote">everything about design</span>
+        <span class="quote">all about design</span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
         <span class="deep-pink">RUMAH</span>
         <span class="font-weight-light light-pink">MOZAIK</span>
@@ -55,19 +55,14 @@
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>
-      <v-footer padless>
+      <v-footer padless style="background-color: transparent">
         <v-row justify="center" no-gutters>
-          <v-btn
-            v-for="link in links"
-            :key="link"
-            color="white"
-            text
-            rounded
-            class="my-2"
-          >{{ link }}</v-btn>
-          <v-col class="red accent-2 py-4 text-center white--text" cols="12">
-            {{ new Date().getFullYear() }} —
-            <strong>Kodeskillet</strong>
+          <v-col class="py-4 text-center" cols="12">
+            &copy;
+            {{ new Date().getFullYear() }}
+            <a href="https://github.com/kodeskillet" target="_blank">
+              <code> - kodeskillet.</code>
+            </a>
           </v-col>
         </v-row>
       </v-footer>
@@ -83,41 +78,21 @@
     data: () => ({
       showMenu: false,
       menuIcon: "mdi-menu",
-      menuItems: [
-        {
-          icon: "mdi-home",
-          title: "Home",
-          navigateTo: "/",
-        },
-        {
-          icon: "mdi-package-variant-closed",
-          title: "Products",
-          navigateTo: "",
-        },
-        {
-          icon: "mdi-brush",
-          title: "Designs",
-          navigateTo: "",
-        },
-        {
-          icon: "mdi-information-outline",
-          title: "About",
-          navigateTo: "/about",
-        },
-        {
-          icon: "mdi-email",
-          title: "Contact",
-          navigateTo: "",
-        },
-      ],
+      menuItems: [],
       location: "HOME",
       prevHeight: 0,
-
       allProducts: null
     }),
-    mounted() {
+    created() {
       this.fillProducts()
       this.fillCatalogs()
+      this.menuItems = this.$store.getters.menuItems;
+    },
+    mounted() {
+      setInterval(() => {
+        this.fillProducts()
+        this.fillCatalogs()
+      }, 10000)
     },
     computed: mapState(['products', 'catalogs']),
     watch: {
@@ -128,6 +103,16 @@
         } else {
           this.menuIcon = "mdi-menu"
         }
+      },
+      'products': {
+        handler (val) {
+          this.allProducts = val
+        }, deep: true
+      },
+      'catalogs': {
+        handler (val) {
+          this.allCatalogs = val
+        }, deep: true
       }
     },
     methods: {
@@ -136,62 +121,38 @@
         this.showMenu = false;
         this.location = page.title;
       },
-      {
-        icon: "mdi-package-variant-closed",
-        title: "Products",
-        navigateTo: "/products"
+      beforeLeave(element) {
+        this.prevHeight = getComputedStyle(element).height;
       },
-      {
-        icon: "mdi-brush",
-        title: "Designs",
-        navigateTo: "/design"
+      enter(element) {
+        const { height } = getComputedStyle(element);
+
+        element.style.height = this.prevHeight;
+
+        setTimeout(() => {
+          element.style.height = height;
+        });
       },
-      {
-        icon: "mdi-information-outline",
-        title: "About",
-        navigateTo: "/about"
+      afterEnter(element) {
+        element.style.height = "auto";
       },
-      {
-        icon: "mdi-email",
-        title: "Contact",
-        navigateTo: "/contact"
-      }
-    ],
-    location: "HOME",
-    prevHeight: 0
-  }),
-  watch: {
-    // eslint-disable-next-line no-unused-vars
-    showMenu(newVal, oldVal) {
-      if (newVal) {
-        this.menuIcon = "mdi-menu-open";
-      } else {
-        this.menuIcon = "mdi-menu";
+      async fillProducts () {
+        const store = this.$store;
+        await Api.product.getAll().then(response => {
+          store.dispatch('fillProduct', response.data)
+        }).catch(err => {
+          alert(err)
+        })
+      },
+      async fillCatalogs () {
+        const store = this.$store
+        await Api.catalog.getAll().then(response => {
+          store.dispatch('fillCatalog', response.data)
+        }).catch(err => {
+          alert(err)
+        })
       }
     }
-  },
-  methods: {
-    navigator(page) {
-      this.$router.push(page.navigateTo);
-      this.showMenu = false;
-      this.location = page.title;
-    },
-    beforeLeave(element) {
-      this.prevHeight = getComputedStyle(element).height;
-    },
-    enter(element) {
-      const { height } = getComputedStyle(element);
-
-      element.style.height = this.prevHeight;
-
-      setTimeout(() => {
-        element.style.height = height;
-      });
-    },
-    afterEnter(element) {
-      element.style.height = "auto";
-    }
-  }
 };
 </script>
 

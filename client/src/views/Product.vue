@@ -1,56 +1,89 @@
 <template>
   <section class="product">
-    <!--    Bapak Ayib edit edit disini-->
-    <v-row no-gutters>
-      <v-container>
-        <v-tabs align-with-title background-color="transparent">
-          <v-col v-for="n in 3" :key="n" cols="12" sm="4">
-            <v-tab class="pink--text">IKI TAB COK SEK STATIS</v-tab>
-          </v-col>
-        </v-tabs>
-        <v-tabs-item>
-          <!-- <v-card > -->
-          <v-col
-            id="scrolling-techniques-3"
-            class="overflow-y-auto"
-            max-height="600"
-            background-color="transparent"
-          >
-            <v-container>
-              <v-col cols="12">
-                  <v-container>
-                    <v-row>
-                      <v-col v-for="n in 30" :key="n" class="d-flex child-flex" cols="4">
-                        <v-card flat tile class="d-flex">
-                          <v-img
-                            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                            aspect-ratio="1"
-                            class="grey lighten-2"
-                          >
-                          </v-img>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </v-container>
+<!--    <v-container>-->
+      <v-tabs center-active background-color="blue" light grow class="fixed-tabs-bar">
+        <v-tab v-for="(catalog, index) in allCatalogs" class="white--text" :key="index" :href="`#tab-${index}`">
+          {{ catalog.name }}
+        </v-tab>
+        <v-tab-item v-for="(catalog, index) in allCatalogs" :key="index" :value="'tab-'+index">
+          <v-container>
+            <v-row>
+              <v-col v-if="filterProducts(catalog.id).length === 0" class="text-center pt-12 pb-12" style="margin: 12.5% 0 12.5% 0">
+                <p class="deep-pink font-weight-bold display-4 font-italic">Oops!</p>
+                <p class="font-italic">
+                  <span class="display-1 font-weight-thin">Products of this catalog is not yet available.</span><br/>
+                  <span class="headline font-weight-thin">Please check again next time.</span>
+                </p>
               </v-col>
-            </v-container>
-          </v-col>
-          <!-- </v-card> -->
-        </v-tabs-item>
-      </v-container>
-    </v-row>
+              <v-col v-else
+                     v-for="(product, index) in filterProducts(catalog.id)"
+                     :key="index"
+                     class="d-flex child-flex"
+                     cols="4">
+                <v-card flat tile class="d-flex">
+                  <v-img :src="`${imgBaseUrl}/${product.picture}`"
+                         :lazy-src="`${imgBaseUrl}/${product.picture}`"
+                         aspect-ratio="1"
+                         class="grey lighten-2"/>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
+      </v-tabs>
+<!--    </v-container>-->
   </section>
 </template>
 
 <script>
-// Ini ndausah diumek
+import {mapState} from 'vuex'
+import Api from '../services/Api'
 
 export default {
-  name: "Product"
+  name: "Product",
+  data: () => ({
+    imgBaseUrl: `${Api.baseUrl}/storage/products`,
+    allProducts: null,
+    allCatalogs: null,
+  }),
+  mounted() {
+    this.allProducts = this.$store.getters.products
+    this.allCatalogs = this.$store.getters.catalogs
+  },
+  computed: mapState(['products', 'catalogs']),
+  watch: {
+    'products': {
+      handler (val) {
+        this.allProducts = val
+      }, deep: true
+    },
+    'catalogs': {
+      handler (val) {
+        this.allCatalogs = val
+      },deep: true
+    }
+  },
+  methods: {
+    filterProducts (catalogId) {
+      let products = this.allProducts
+      return products.filter(product => product.catalogType === catalogId)
+    }
+  },
+
 };
 </script>
 
+<style>
+  .fixed-tabs-bar .v-tabs-bar {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 4rem !important;
+    z-index: 2 !important;
+    -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
+</style>
+
 <style scoped>
-/*styling disini*/
+
 </style>

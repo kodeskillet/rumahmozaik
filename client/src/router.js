@@ -17,7 +17,7 @@ export default new Router({
       meta: { transitionName: 'slide' },
     },
     {
-      path: '/products',
+      path: '/product',
       name: 'products',
       component: Product,
       meta: { transitionName: 'slide' }
