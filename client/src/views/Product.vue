@@ -55,7 +55,7 @@
                     <span class="font-weight-regular">{{format(product.price)}}</span>
                   </v-chip>
                 </v-card-text>
-                <v-divider class="mx-auto"></v-divider>
+                <v-divider class="mx-auto"/>
                 <v-card-actions>
                   <v-spacer v-if="!amount(product.id)"/>
                   <v-btn v-if="!amount(product.id)"
@@ -139,7 +139,12 @@ export default {
     'catalogs': {
       handler (val) {
         this.allCatalogs = val
-      },deep: true
+      }, deep: true
+    },
+    'order.cart.content': {
+      handler (val) {
+        this.currentCart = val
+      }, deep: true
     }
   },
   methods: {
@@ -173,42 +178,52 @@ export default {
       this.$store.dispatch('setCart', cart)
       this.snackbar = {
         state: true,
-        text: 'Added to cart',
+        text: 'Added to cart.',
         color: 'success',
-        timeout: 3000
-      }
-    },
-    removeFromCart (productId) {
-      let cart = this.currentCart
-      cart.forEach((el, index) => {
-        if (el.productId === productId) {
-          cart[index] = {}
-        }
-      })
-      this.$store.dispatch('setCart', cart)
-      this.snackbar = {
-        state: true,
-        text: 'Removed from cart',
-        color: 'error',
         timeout: 3000
       }
     },
     reduceItem (productId) {
       let cart = this.currentCart
+      let tmpIndex = 0
+      let tmpAmount = 0
       cart.forEach((el, index) => {
         if (el.productId === productId) {
-          if (el.amount === 1) {
-            cart[index] = {}
-          } else {
-            cart[index].amount--
-          }
+          tmpIndex = index
+          tmpAmount = el.amount
         }
+      })
+
+      if (tmpAmount === 1) {
+        cart = this.currentCart.filter(el => {
+          return (el.productId !== productId)
+        })
+        this.snackbar = {
+          state: true,
+          text: 'Removed from cart.',
+          color: 'info',
+          timeout: 3000
+        }
+      } else {
+        cart[tmpIndex].amount--
+        this.snackbar = {
+          state: true,
+          text: 'Amount reduced.',
+          color: 'info',
+          timeout: 3000
+        }
+      }
+      this.$store.dispatch('setCart', cart)
+    },
+    removeFromCart (productId) {
+      let cart = this.currentCart.filter(el => {
+        return (el.productId !== productId)
       })
       this.$store.dispatch('setCart', cart)
       this.snackbar = {
         state: true,
-        text: 'Amount reduced',
-        color: 'info',
+        text: 'Removed from cart.',
+        color: 'error',
         timeout: 3000
       }
     },
