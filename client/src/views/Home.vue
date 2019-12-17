@@ -1,11 +1,8 @@
 <template>
   <section class="home">
-    <v-carousel hide-delimiters
-                cycle
-                height="auto"
+    <v-carousel height="auto"
                 class="mb-12"
-                :prev-icon="false"
-                :next-icon="false"
+                :show-arrows="false"
                 style="border-bottom: 1px solid #ddd">
       <v-carousel-item v-for="(item, index) in items"
                        :key="index"
@@ -50,7 +47,7 @@
                  max-width="500"
                  max-height="300"/>
         </v-col>
-        <v-col lg="6" style="padding-top: 3%">
+        <v-col lg="6" style="padding-top: 4%; line-height: 3">
           <h2 class>
             <span class="display-2 font-weight-light">Over </span>
             <span class="display-3 deep-pink font-weight-bold">1000+ </span>
@@ -60,11 +57,6 @@
             <span class="display-2 font-weight-light">And </span>
             <span class="display-3 deep-blue font-weight-bold">50+ </span>
             <span class="display-2 font-weight-thin">resellers trusted our service</span>
-          </h2>
-          <h2>
-            <span class="display-2 font-weight-light">In </span>
-            <span class="display-3 bright-blue font-weight-bold">10+ </span>
-            <span class="display-2 font-weight-thin">E - Commerce platforms</span>
           </h2>
         </v-col>
       </v-row>

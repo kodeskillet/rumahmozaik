@@ -42,6 +42,16 @@
     </v-card>
 
     <v-content @click.native="showMenu = false">
+      <div class="loading" :class="{'hidden': loaded}" style="padding-top: 200px">
+        <v-row justify="center" align="center">
+          <div class="text-center ma-12">
+            <v-progress-circular indeterminate
+                                 :size="50"
+                                 color="primary">
+            </v-progress-circular>
+          </div>
+        </v-row>
+      </div>
       <transition
         name="fade"
         mode="out-in"
@@ -82,6 +92,7 @@
   export default {
     data: () => ({
       showMenu: false,
+      loaded: false,
       menuIcon: "mdi-menu",
       menuItems: [],
       location: "HOME",
@@ -98,6 +109,9 @@
         this.fillProducts()
         this.fillCatalogs()
       }, 10000)
+      setTimeout(() => {
+        this.loaded = true
+      }, 2000)
     },
     computed: mapState(['products', 'catalogs']),
     watch: {
@@ -108,6 +122,14 @@
         } else {
           this.menuIcon = "mdi-menu"
         }
+      },
+      '$route': {
+        handler() {
+          this.loaded = false
+          setTimeout(() => {
+            this.loaded = true
+          }, 2000)
+        }, deep: true
       },
       'products': {
         handler (val) {
@@ -162,9 +184,6 @@
 </script>
 
 <style>
-  html {
-    overflow: hidden;
-  }
   .deep-pink {
     color: #e84242;
   }
@@ -182,6 +201,24 @@
   }
   .bg-light-pink {
     background-color: #eea6a6 !important;
+  }
+  .loading {
+    height: 100%;
+    width: 100%;
+    position: absolute; /* Stay in place */
+    z-index: 999; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+    transition:opacity 0.5s linear;
+  }
+  .loading.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
   }
 </style>
 

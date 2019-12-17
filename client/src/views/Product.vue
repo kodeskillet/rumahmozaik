@@ -1,5 +1,5 @@
 <template>
-  <section class="product">
+  <section class="product mb-12 pb-12">
     <v-tabs center-active background-color="blue-grey lighten-5" light grow class="fixed-tabs-bar">
       <v-tab v-for="(catalog, index) in allCatalogs" class="blue--text text--darken-3" :key="index" :href="`#tab-${index}`">
         {{ catalog.name }}
