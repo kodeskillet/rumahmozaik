@@ -208,15 +208,26 @@
                 $('.modal-footer').on('click', '.edit', function(){
                     $.ajax({
                         type: 'PUT',
-                        url: 'http://127.0.0.1:8000/api/product',
+                        url: 'http://127.0.0.1:8000/api/product/update',
                         data:{
                             'id': data.id,
                             'productName' : $('#productName').val(),
                             'catalogType' : $('#catalogType').val(),
                             'price' : $('#price').val()
                         },
-                        success: function(){
-                            location.reload();
+                        success: function() {
+                            getData();
+                            $.notify({
+                                icon: "tim-icons icon-bell-55",
+                                message: "Product Updated!"
+                            },{
+                                type: type['#f6383b'],
+                                timer: 5000,
+                                placement: {
+                                    from: 'top',
+                                    align: 'center'
+                                }
+                            });
                         }
                     })
                 })

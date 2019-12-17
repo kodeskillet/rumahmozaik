@@ -64,9 +64,15 @@ class ProductController extends Controller
         $product->catalogType = $request->catalogType;
         $product->price = $request->price;
 
-        return response()->json([
-            'message' => 'Update Success'
-        ]);
+        if($product->save()){
+            return response()->json([
+                'message' => 'Update Success'
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'Update Failed'
+            ]);
+        }
     }
 
     public function show ($id)
