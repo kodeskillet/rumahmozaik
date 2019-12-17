@@ -5,7 +5,8 @@
                 height="auto"
                 class="mb-12"
                 :prev-icon="false"
-                :next-icon="false">
+                :next-icon="false"
+                style="border-bottom: 1px solid #ddd">
       <v-carousel-item v-for="(item, index) in items"
                        :key="index"
                        v-bind:src="item.src">
@@ -21,7 +22,7 @@
           <p class="display-1 mt-2 font-weight-thin text-right">
             Whatever you need, However you want, In a way you would never expect.
           </p>
-          <p class="title mt-10 font-weight-light pr-6 text-right">
+          <p class="title mt-12 font-weight-light pr-6 text-right">
             In
             <span class="deep-blue font-weight-bold">RUMAH</span>
             <span class="bright-blue">MOZAIK</span>, we explore the best approach to <br/>
@@ -33,18 +34,18 @@
           </p>
         </v-col>
         <v-col lg="4">
-          <v-img src="/assets/logo-roof.png"
-                 lazy-src="/assets/logo-roof.png"
+          <v-img src="/assets/images/logo-roof.png"
+                 lazy-src="/assets/images/logo-roof.png"
                  aspect-ratio="1"
                  max-width="700"
                  max-height="250"
                  style="top:35px"/>
         </v-col>
       </v-row>
-      <v-row class="mt-12 bg-light-pink" justify="center">
+      <v-row class="mt-12 mb-12 bg-light-pink" justify="center">
         <v-col lg="4" class="pb-0">
-          <v-img src="/assets/cuscus.png"
-                 lazy-src="/assets/cuscus.png"
+          <v-img src="/assets/images/cuscus.png"
+                 lazy-src="/assets/images/cuscus.png"
                  aspect-ratio="1"
                  max-width="500"
                  max-height="300"/>
@@ -77,9 +78,9 @@ export default {
   name: 'home',
   data: () => ({
       items: [
-        {src: '/assets/crsl1.jpg'},
-        {src: '/assets/crsl2.jpg'},
-        {src: '/assets/crsl3.jpg'},
+        {src: '/assets/images/crsl1.jpg'},
+        {src: '/assets/images/crsl2.jpg'},
+        {src: '/assets/images/crsl3.jpg'},
       ],
       hideDelimiters: true
   }),

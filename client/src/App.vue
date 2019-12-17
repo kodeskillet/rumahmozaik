@@ -13,7 +13,12 @@
       </div>
       <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="quote">all about design</span>
+        <span class="quote">
+          By
+          <span class="deep-blue font-weight-bold">Hesti</span>
+          to
+          <span class="bright-blue font-weight-bold">The World</span>
+        </span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
         <span class="deep-pink">RUMAH</span>
         <span class="font-weight-light light-pink">MOZAIK</span>
@@ -55,11 +60,11 @@
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>
-      <v-footer padless style="background-color: transparent">
+      <v-footer absolute class="pt-8 pb-5" style="background-color: initial">
         <v-row justify="center" no-gutters>
           <v-col class="py-4 text-center" cols="12">
-            &copy;
-            {{ new Date().getFullYear() }} -
+            <v-icon>mdi-copyright</v-icon>
+            <span class="font-weight-bold">{{ new Date().getFullYear() }}.</span>
             <a href="https://github.com/kodeskillet" target="_blank">
               <code>kodeskillet.</code>
             </a>

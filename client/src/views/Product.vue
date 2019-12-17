@@ -1,13 +1,13 @@
 <template>
   <section class="product">
-    <v-tabs center-active background-color="blue-grey lighten-4" light grow class="fixed-tabs-bar">
+    <v-tabs center-active background-color="blue-grey lighten-5" light grow class="fixed-tabs-bar">
       <v-tab v-for="(catalog, index) in allCatalogs" class="blue--text text--darken-3" :key="index" :href="`#tab-${index}`">
         {{ catalog.name }}
       </v-tab>
       <v-tab-item v-for="(catalog, index) in allCatalogs" :key="index" :value="'tab-'+index">
         <v-container>
           <v-row>
-            <v-col v-if="filterProducts(catalog.id).length === 0" class="text-center pt-12 pb-12" style="margin: 12.5% 0 12.5% 0">
+            <v-col v-if="filterProducts(catalog.id).length === 0" class="text-center" style="margin-top: 10%">
               <p class="deep-pink font-weight-bold display-4 font-italic">Oops!</p>
               <p class="font-italic">
                 <span class="display-1 font-weight-thin">Our </span>
