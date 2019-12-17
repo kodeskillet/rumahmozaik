@@ -103,6 +103,8 @@
       this.fillProducts()
       this.fillCatalogs()
       this.menuItems = this.$store.getters.menuItems;
+      let order = this.$store.getters.order
+      this.totalCart = order.cart.total
     },
     mounted() {
       setInterval(() => {
@@ -113,7 +115,7 @@
         this.loaded = true
       }, 2000)
     },
-    computed: mapState(['products', 'catalogs', 'cart']),
+    computed: mapState(['products', 'catalogs', 'order']),
     watch: {
       // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
@@ -131,10 +133,10 @@
           }, 2000)
         }, deep: true
       },
-      'cart': {
+      'order.cart': {
         handler (val) {
           this.totalCart = val.total
-        }
+        }, deep: true
       }
     },
     methods: {
