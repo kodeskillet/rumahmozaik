@@ -19,15 +19,15 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::group(['middleware' => 'auth'], function () {
-		Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);
-		Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'PageController@notifications']);
-		Route::get('tables', ['as' => 'pages.tables', 'uses' => 'PageController@tables']);
-		Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
         Route::get('product', ['as' => 'pages.product', 'uses' => 'PageController@product']);
-        Route::get('product/edit/{id}', ['as' => 'pages.product.edit', 'uses' => 'PageController@productEdit']);
         Route::delete('product/{id}',['as' => 'pages.productDelete','uses' =>'PageController@productDelete']);
         Route::get('catalog', ['as' => 'pages.catalog', 'uses' => 'PageController@catalog']);
         Route::delete('catalog/{id}', ['as' => 'pages.catalogDelete', 'uses' => 'PageController@catalogDelete']);
+        // Route::get('product/edit/{id}', ['as' => 'pages.product.edit', 'uses' => 'PageController@productEdit']);
+        // Route::get('icons', ['as' => 'pages.icons', 'uses' => 'PageController@icons']);
+		// Route::get('notifications', ['as' => 'pages.notifications', 'uses' => 'PageController@notifications']);
+		// Route::get('tables', ['as' => 'pages.tables', 'uses' => 'PageController@tables']);
+		// Route::get('typography', ['as' => 'pages.typography', 'uses' => 'PageController@typography']);
 });
 
 Route::group(['middleware' => 'auth'], function () {
