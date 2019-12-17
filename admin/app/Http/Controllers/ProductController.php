@@ -40,7 +40,7 @@ class ProductController extends Controller
         $fileNameToStore = time().'_'.$filename.'.'.$extension;
         $path = $request->file('picture')->storeAs('public/products', $fileNameToStore);
 
-        $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
+        $product = new Product;
         $product->productName = $request->productName;
         $product->catalogType = $request->catalogType;
         $product->picture = $fileNameToStore;
@@ -53,6 +53,24 @@ class ProductController extends Controller
         }else{
             return response()->json([
                 'message' => 'Insert Unsuccess'
+            ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->productName = $request->productName;
+        $product->catalogType = $request->catalogType;
+        $product->price = $request->price;
+
+        if($product->save()){
+            return response()->json([
+                'message' => 'Update Success'
+            ]);
+        }else{
+            return response()->json([
+                'message' => 'Update Failed'
             ]);
         }
     }
