@@ -40,7 +40,7 @@ class ProductController extends Controller
         $fileNameToStore = time().'_'.$filename.'.'.$extension;
         $path = $request->file('picture')->storeAs('public/products', $fileNameToStore);
 
-        $product = $request->isMethod('put') ? Product::findOrFail($request->id) : new Product;
+        $product = new Product;
         $product->productName = $request->productName;
         $product->catalogType = $request->catalogType;
         $product->picture = $fileNameToStore;
