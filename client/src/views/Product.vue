@@ -19,13 +19,48 @@
             <v-col v-else
                    v-for="(product, index) in filterProducts(catalog.id)"
                    :key="index"
-                   class="d-flex child-flex pt-8"
-                   cols="4">
-              <v-card flat tile class="d-flex">
+                   class="pt-8"
+                   cols="3">
+              <v-card raised class="mx-auto">
                 <v-img :src="`${imgBaseUrl}/${product.picture}`"
                        :lazy-src="`${imgBaseUrl}/${product.picture}`"
                        aspect-ratio="1"
-                       class="grey lighten-2"/>
+                       class="grey lighten-2">
+                  <template v-slot:placeholder>
+                    <v-row class="fill-height ma-0"
+                           align="center"
+                           justify="center">
+                      <v-progress-circular indeterminate color="grey lighten-4">
+                      </v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+                <v-card-text>
+                  <p>
+                    <span class="font-weight-thin display-1">{{product.productName}}</span>
+                    <span class="font-weight-bold title pink--text text--lighten-3">
+                      &nbsp;x
+                      1
+                    </span>
+                  </p>
+                  <v-chip color="pink lighten-5" pill>
+                    <v-avatar left color="grey">
+                      <span class="font-weight-bold white--text">Rp.</span>
+                    </v-avatar>
+                    <span class="font-weight-regular">{{format(product.price)}}</span>
+                  </v-chip>
+                </v-card-text>
+                <v-divider class="mx-auto"></v-divider>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn  color="red lighten-2"
+                          class="white--text"
+                         raised>
+                    <v-icon>mdi-cart</v-icon>
+                    &nbsp;Add to cart
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                </v-card-actions>
               </v-card>
             </v-col>
           </v-row>
@@ -67,6 +102,12 @@ export default {
     filterProducts (catalogId) {
       let products = this.allProducts
       return products.filter(product => product.catalogType === catalogId)
+    },
+    addToCart (product) {
+
+    },
+    format (num) {
+      return (num).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
   },
 

@@ -64,8 +64,8 @@
 
       <v-btn fixed dark fab bottom right class="pink-btn">
         <v-badge left>
-          <template v-slot:badge>
-            <span>2</span>
+          <template v-if="totalCart > 0" v-slot:badge>
+            <span>{{ totalCart }}</span>
           </template>
           <v-icon>mdi-cart</v-icon>
         </v-badge>
@@ -96,7 +96,8 @@
       menuIcon: "mdi-menu",
       menuItems: [],
       location: "HOME",
-      prevHeight: 0
+      prevHeight: 0,
+      totalCart: 0
     }),
     created() {
       this.fillProducts()
@@ -112,7 +113,7 @@
         this.loaded = true
       }, 2000)
     },
-    computed: mapState(['products', 'catalogs']),
+    computed: mapState(['products', 'catalogs', 'cart']),
     watch: {
       // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
@@ -129,6 +130,11 @@
             this.loaded = true
           }, 2000)
         }, deep: true
+      },
+      'cart': {
+        handler (val) {
+          this.totalCart = val.total
+        }
       }
     },
     methods: {
