@@ -100,7 +100,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="catalogType">Tipe Produk:</label>
                     <div class="col-sm-10">
-                        <select type="text" class="form-control" id="catalogType" name="catalogType">
+                        <select type="text" class="form-control" id="m_catalogType" name="catalogType">
                             @foreach ($catalog as $cat)
                                 <option value="{{$cat->id}}">{{$cat->name}}</option>
                             @endforeach
@@ -202,7 +202,7 @@
             success: (response) => {
                 const data = JSON.parse(response)
                 $('#productName').val(data.productName);
-                $('#catalogType option[value="'+data.catalogType+'"]').prop('selected', true);
+                $('#m_catalogType option[value="'+data.catalogType+'"]').prop('selected', true);
                 $('#price').val(data.price);
                 $('#editModal').modal('show');
                 $('.modal-footer').on('click', '.edit', function(){
@@ -212,7 +212,7 @@
                         data:{
                             'id': data.id,
                             'productName' : $('#productName').val(),
-                            'catalogType' : $('#catalogType').val(),
+                            'catalogType' : $('#m_catalogType').val(),
                             'price' : $('#price').val()
                         },
                         success: function() {
