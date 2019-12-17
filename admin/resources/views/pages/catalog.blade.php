@@ -101,19 +101,34 @@
                 url: `http://127.0.0.1:8000/api/catalogtype/`+id,
                 method: 'delete',
                 data: id,
-                success: function(){
-                    getData();
-                    $.notify({
-                        icon: "tim-icons icon-bell-55",
-                        message: "New Catalog removed."
-                    },{
-                        type: type['#f6383b'],
-                        timer: 5000,
-                        placement: {
-                            from: 'top',
-                            align: 'center'
-                        }
-                    });
+                success: function(response){
+                    // console.log(response.message);
+                    if(response.message=='deleted'){
+                        getData();
+                        $.notify({
+                            icon: "tim-icons icon-bell-55",
+                            message: "Catalog removed."
+                        },{
+                            type: type['#f6383b'],
+                            timer: 5000,
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                    }else{
+                        $.notify({
+                            icon: "tim-icons icon-bell-55",
+                            message: "Failed, catalog still have product!"
+                        },{
+                            type: type['#f6383b'],
+                            timer: 5000,
+                            placement: {
+                                from: 'top',
+                                align: 'center'
+                            }
+                        });
+                    }
                 }
             });
         }
