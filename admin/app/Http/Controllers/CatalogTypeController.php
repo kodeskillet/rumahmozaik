@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CatalogType;
-use Datatables;
 use App\Http\Resources\CatalogTypeResource;
+use Illuminate\Support\Facades\DB;
 
 class CatalogTypeController extends Controller
 {
@@ -36,12 +36,20 @@ class CatalogTypeController extends Controller
     public function destroy($id)
     {
         $type = CatalogType::findOrFail($id);
-
-        //  Delete the post, return as confirmation
-        if ($type->delete()) {
-            $catalog = CatalogType::all();
+        $checker = DB::table('product')
+            ->where('catalogType', $id)
+            ->get()
+            ->count();
+        if($checker > 0)
+        {
             return response()->json([
-                'message' => 'Delete Success'
+                'message' => 'failed'
+            ]);
+        }else
+        {
+            $type->delete();
+            return response()->json([
+                'message' => 'deleted'
             ]);
         }
     }
