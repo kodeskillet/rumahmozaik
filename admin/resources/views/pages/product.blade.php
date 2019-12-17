@@ -100,8 +100,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="catalogType">Tipe Produk:</label>
                     <div class="col-sm-10">
-                        <select type="text" class="form-control" id="catalogType" name="catalogType">
-                            <option selected>Choose</option>
+                        <select type="text" class="form-control" id="m_catalogType" name="catalogType">
                             @foreach ($catalog as $cat)
                                 <option value="{{$cat->id}}">{{$cat->name}}</option>
                             @endforeach
@@ -112,15 +111,6 @@
                     <label class="control-label col-sm-2" for="price">Harga:</label>
                     <div class="col-sm-10">
                         <input type="number" class="form-control" id="price" name="price">
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Upload</span>
-                    </div>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile02" name="picture">
-                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                     </div>
                 </div>
             </form>
@@ -212,10 +202,38 @@
             success: (response) => {
                 const data = JSON.parse(response)
                 $('#productName').val(data.productName);
-                $('#catalogType').val(data.catalogType);
+                $('#m_catalogType option[value="'+data.catalogType+'"]').prop('selected', true);
                 $('#price').val(data.price);
-                // $('#inputGroupFile02').val(data.picture);
                 $('#editModal').modal('show');
+                $('.modal-footer').on('click', '.edit', function(){
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'http://127.0.0.1:8000/api/product/update',
+                        data:{
+                            'id': data.id,
+                            'productName' : $('#productName').val(),
+                            'catalogType' : $('#m_catalogType').val(),
+                            'price' : $('#price').val()
+                        },
+                        success: function() {
+                            getData();
+                            $.notify({
+                                icon: "tim-icons icon-bell-55",
+                                message: "Product Updated!"
+                            },{
+                                type: type['#f6383b'],
+                                timer: 5000,
+                                placement: {
+                                    from: 'top',
+                                    align: 'center'
+                                }
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2500)
+                        }
+                    })
+                })
             }
         })
     }
