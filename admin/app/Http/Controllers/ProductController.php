@@ -57,6 +57,18 @@ class ProductController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        $product = Product::findOrFail($request->id);
+        $product->productName = $request->productName;
+        $product->catalogType = $request->catalogType;
+        $product->price = $request->price;
+
+        return response()->json([
+            'message' => 'Update Success'
+        ]);
+    }
+
     public function show ($id)
     {
         $product = Product::findOrFail($id);

@@ -205,6 +205,21 @@
                 $('#catalogType option[value="'+data.catalogType+'"]').prop('selected', true);
                 $('#price').val(data.price);
                 $('#editModal').modal('show');
+                $('.modal-footer').on('click', '.edit', function(){
+                    $.ajax({
+                        type: 'PUT',
+                        url: 'http://127.0.0.1:8000/api/product',
+                        data:{
+                            'id': data.id,
+                            'productName' : $('#productName').val(),
+                            'catalogType' : $('#catalogType').val(),
+                            'price' : $('#price').val()
+                        },
+                        success: function(){
+                            location.reload();
+                        }
+                    })
+                })
             }
         })
     }
