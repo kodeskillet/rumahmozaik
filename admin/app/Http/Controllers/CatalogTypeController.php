@@ -52,13 +52,5 @@ class CatalogTypeController extends Controller
                 'message' => 'deleted'
             ]);
         }
-
-
-        //  Delete the post, return as confirmation
-        // if ($type->delete()) {
-        //     return response()->json([
-        //         'message' => 'Delete Success'
-        //     ]);
-        // }
     }
 }
