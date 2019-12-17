@@ -1,8 +1,8 @@
 <template>
   <section class="product">
 <!--    <v-container>-->
-      <v-tabs center-active background-color="blue" light grow class="fixed-tabs-bar">
-        <v-tab v-for="(catalog, index) in allCatalogs" class="white--text" :key="index" :href="`#tab-${index}`">
+      <v-tabs center-active background-color="blue-grey lighten-4" light grow class="fixed-tabs-bar">
+        <v-tab v-for="(catalog, index) in allCatalogs" class="blue--text text--darken-3" :key="index" :href="`#tab-${index}`">
           {{ catalog.name }}
         </v-tab>
         <v-tab-item v-for="(catalog, index) in allCatalogs" :key="index" :value="'tab-'+index">
@@ -11,14 +11,16 @@
               <v-col v-if="filterProducts(catalog.id).length === 0" class="text-center pt-12 pb-12" style="margin: 12.5% 0 12.5% 0">
                 <p class="deep-pink font-weight-bold display-4 font-italic">Oops!</p>
                 <p class="font-italic">
-                  <span class="display-1 font-weight-thin">Products of this catalog is not yet available.</span><br/>
+                  <span class="display-1 font-weight-thin">Our </span>
+                  <span class="display-1 font-weight-regular light-pink"><u>{{catalog.name}}</u>&nbsp;</span>
+                  <span class="display-1 font-weight-thin">products is not yet available. </span><br/>
                   <span class="headline font-weight-thin">Please check again next time.</span>
                 </p>
               </v-col>
               <v-col v-else
                      v-for="(product, index) in filterProducts(catalog.id)"
                      :key="index"
-                     class="d-flex child-flex"
+                     class="d-flex child-flex pt-8"
                      cols="4">
                 <v-card flat tile class="d-flex">
                   <v-img :src="`${imgBaseUrl}/${product.picture}`"
@@ -81,6 +83,9 @@ export default {
     z-index: 2 !important;
     -webkit-box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+  }
+  .v-tabs-slider-wrapper {
+    height: 3px !important
   }
 </style>
 

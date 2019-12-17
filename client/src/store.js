@@ -17,9 +17,9 @@ const store = new Vuex.Store({
         navigateTo: "/product",
       },
       {
-        icon: "mdi-brush",
-        title: "Designs",
-        navigateTo: "/design",
+        icon: "mdi-help-circle",
+        title: "How to order",
+        navigateTo: "/howto",
       },
       {
         icon: "mdi-information-outline",

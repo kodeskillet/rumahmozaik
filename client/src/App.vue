@@ -59,9 +59,9 @@
         <v-row justify="center" no-gutters>
           <v-col class="py-4 text-center" cols="12">
             &copy;
-            {{ new Date().getFullYear() }}
+            {{ new Date().getFullYear() }} -
             <a href="https://github.com/kodeskillet" target="_blank">
-              <code> - kodeskillet.</code>
+              <code>kodeskillet.</code>
             </a>
           </v-col>
         </v-row>

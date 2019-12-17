@@ -1,6 +1,11 @@
 <template>
   <section class="home">
-    <v-carousel hide-delimiters cycle show-arrows-on-hover height="auto" class="mb-12">
+    <v-carousel hide-delimiters
+                cycle
+                height="auto"
+                class="mb-12"
+                :prev-icon="false"
+                :next-icon="false">
       <v-carousel-item v-for="(item, index) in items"
                        :key="index"
                        v-bind:src="item.src">

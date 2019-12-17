@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About'
 import Product from "./views/Product";
-import Design from "./views/Design";
+import HowTo from "./views/HowTo";
 import Contact from "./views/Contact";
 
 Vue.use(Router)
@@ -23,9 +23,9 @@ export default new Router({
       meta: { transitionName: 'slide' }
     },
     {
-      path: '/design',
-      name: 'design',
-      component: Design,
+      path: '/howto',
+      name: 'howto',
+      component: HowTo,
       meta: { transitionName: 'slide' }
     },
     {
