@@ -8,11 +8,9 @@
   // Ini ndausah diumek
 export default {
   name: 'About',
-  data () {
-    return {
+  data: () => ({
 
-    }
-  }
+  })
 }
 </script>
 

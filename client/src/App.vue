@@ -96,8 +96,7 @@
       menuIcon: "mdi-menu",
       menuItems: [],
       location: "HOME",
-      prevHeight: 0,
-      allProducts: null
+      prevHeight: 0
     }),
     created() {
       this.fillProducts()
@@ -129,16 +128,6 @@
           setTimeout(() => {
             this.loaded = true
           }, 2000)
-        }, deep: true
-      },
-      'products': {
-        handler (val) {
-          this.allProducts = val
-        }, deep: true
-      },
-      'catalogs': {
-        handler (val) {
-          this.allCatalogs = val
         }, deep: true
       }
     },
@@ -205,8 +194,8 @@
   .loading {
     height: 100%;
     width: 100%;
-    position: absolute; /* Stay in place */
-    z-index: 999; /* Sit on top */
+    position: absolute;
+    z-index: 999;
     left: 0;
     top: 0;
     background-color: #fff;
