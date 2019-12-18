@@ -14,7 +14,7 @@ class AddStatusColumnInOrderTable extends Migration
     public function up()
     {
         Schema::table('order', function (Blueprint $table) {
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(false)->after('whatsapp');
         });
     }
 
