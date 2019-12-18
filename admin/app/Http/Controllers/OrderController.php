@@ -55,4 +55,14 @@ class OrderController extends Controller
         $json = json_encode(new OrderResource($order));
         return $json;
     }
+
+    public function statechange(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        $order->status = "SELESAI";
+        $order->save();
+        return response()->json([
+            'message' => 'Success'
+        ]);
+    }
 }

@@ -66,7 +66,7 @@
             }
         })
         $.ajax({
-            url: 'http://127.0.0.1:8000/api/product/statechange',
+            url: `http://127.0.0.1:8000/api/order/statechange/`+id,
             method: 'post',
             data: id,
             success: function(){

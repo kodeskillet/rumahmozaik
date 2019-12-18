@@ -20,6 +20,7 @@ Route::put('product/update','ProductController@update');
 Route::delete('product/{id}','ProductController@destroy');
 Route::get('orders','OrderController@index');
 Route::get('order/{id}','OrderController@show');
+Route::post('order/statechange/{id}','OrderController@statechange');
 
 Route::get('catalogtype','CatalogTypeController@index');
 Route::get('catalogtype/{id}','CatalogTypeController@show');
