@@ -6,7 +6,7 @@ use App\Order;
 use App\Product;
 use App\CatalogType;
 use App\Laravue\JsonResponse;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\OrderResource;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CatalogTypeResource;
@@ -25,9 +25,10 @@ class OrderController extends Controller
                                 ->select(
                                     'order_item.product_id',
                                     'order_item.order_id',
-                                    'order_item.amount',
                                     'product.productName',
-                                    'product.price'
+                                    'product.price',
+                                    'product.picture',
+                                    'order_item.amount'
                                 )
                                 ->where('order_id', $order->id)
                                 ->get();

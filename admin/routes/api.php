@@ -18,6 +18,7 @@ Route::get('product/{id}','ProductController@show');
 Route::post('product','ProductController@store');
 Route::put('product/update','ProductController@update');
 Route::delete('product/{id}','ProductController@destroy');
+Route::get('orders', 'OrderController@index');
 
 Route::get('catalogtype','CatalogTypeController@index');
 Route::get('catalogtype/{id}','CatalogTypeController@show');
