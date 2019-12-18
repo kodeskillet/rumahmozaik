@@ -72,8 +72,8 @@ class OrderController extends Controller
             foreach($cart as $item){
                 $order_item = new OrderItem;
                 $order_item->order_id = $orderId;
-                $order_item->product_id = $item->productId;
-                $order_item->amount = $item->amount;
+                $order_item->product_id = $item['product_id'];
+                $order_item->amount = $item['amount'];
                 $order_item->save();
             }
             return response()->json([
@@ -82,8 +82,8 @@ class OrderController extends Controller
         }
         $order_item = new OrderItem;
         $order_item->order_id = $orderId;
-        $order_item->product_id = $cart->productId;
-        $order_item->amount = $cart->amount;
+        $order_item->product_id = $cart['product_id'];
+        $order_item->amount = $cart['amount'];
         $order_item->save();
 
         return response()->json([
