@@ -73,9 +73,8 @@ class PageController extends Controller
         return redirect()->action('PageController@catalog');
     }
 
-    public function order(OrderController $orders)
+    public function order()
     {
-        $orders = $orders->index();
-        return view('pages.order', compact('orders'));
+        return view('pages.order');
     }
 }
