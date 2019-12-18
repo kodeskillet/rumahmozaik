@@ -71,7 +71,7 @@
                         '   <button type="button" class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail(' + item.id + ')">Detail</button>'+
                         '</td>' +
                         '<td>' +
-                        '   <button type="button" class = "btn btn-warning" id = "state_' + item.id + '" onclick = "state(' + item.id + ')" ' + (item.status == ("SELESAI") ? 'disabled' : '' ) + '>' + item.status + '</button>' +
+                        '   <button type="button" class = "btn btn-warning" id = "state_' + item.id + '" onclick = "state(' + item.id + ')" ' + (item.status == true ? 'disabled' : '' ) + '>' + (item.status == true ? 'Selesai' : 'On Proccess') + '</button>' +
                         '</td>' +
                         '</tr>';
                         $('#dataContainer').append(HTML);
