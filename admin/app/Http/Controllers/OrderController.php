@@ -93,7 +93,7 @@ class OrderController extends Controller
     public function statechange(Request $request)
     {
         $order = Order::findOrFail($request->id);
-        $order->status = "SELESAI";
+        $order->status = true;
         $order->save();
         return response()->json([
             'message' => 'Success'
