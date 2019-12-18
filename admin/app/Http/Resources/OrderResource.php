@@ -17,7 +17,8 @@ class OrderResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'whatsapp' => $this->whatsapp
+            'whatsapp' => $this->whatsapp,
+            'cart' => $this->orderItem
         ];
     }
 }

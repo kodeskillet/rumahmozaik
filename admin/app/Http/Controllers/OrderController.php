@@ -21,8 +21,15 @@ class OrderController extends Controller
         $orders = Order::all();
         foreach($orders as $order){
             $order->orderItem = DB::table('order_item')
-                                ->select('product_id', 'amount')
-                                ->where('order_id',$order->id)
+                                ->join('product', 'order_item.product_id', '=', 'product.id')
+                                ->select(
+                                    'order_item.product_id',
+                                    'order_item.order_id',
+                                    'order_item.amount',
+                                    'product.productName',
+                                    'product.price'
+                                )
+                                ->where('order_id', $order->id)
                                 ->get();
         }
         $json = json_encode(OrderResource::collection($orders));
