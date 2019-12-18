@@ -84,7 +84,7 @@
       </v-badge>
     </v-btn>
 
-    <v-dialog v-model="userInfo.dialogState" persistent max-width="500px">
+    <v-dialog v-model="userDialog" persistent max-width="500px">
       <v-card>
         <v-card-title>
           <span class="headline">Quick Intro</span>
@@ -94,23 +94,35 @@
         </v-card-subtitle>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field v-model="userInfo.firstName" label="First Name" required/>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field v-model="userInfo.lastName" label="Last Name" required/>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="userInfo.email" label="Email" required/>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field v-model="userInfo.phone"
-                              label="Phone Number"
-                              hint="Please provide phone number that attached to Whatsapp Messenger"
-                              required/>
-              </v-col>
-            </v-row>
+            <v-form ref="userForm" v-model="userForm.valid" lazy-validation>
+              <v-row>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="userForm.firstName"
+                                label="First Name"
+                                :rules="userForm.rules.firstName"
+                                required/>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="userForm.lastName"
+                                label="Last Name"
+                                :rules="userForm.rules.lastName"
+                                required/>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="userForm.email"
+                                label="Email"
+                                :rules="userForm.rules.email"
+                                required/>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="userForm.phone"
+                                label="Phone Number"
+                                :rules="userForm.rules.phone"
+                                hint="Please provide phone number that attached to Whatsapp Messenger"
+                                required/>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-container>
         </v-card-text>
         <v-divider class="mx-auto"/>
@@ -118,7 +130,7 @@
           <v-spacer/>
           <v-btn color="red darken-1"
                  class="white--text"
-                 @click="userInfo.dialogState = false">
+                 @click="closeUserInfo">
             Cancel
           </v-btn>
           <v-btn color="success"
@@ -133,6 +145,10 @@
     <v-dialog v-model="cartDialog" max-width="1200px">
       <v-card>
         <v-card-title>
+          <span class="headline">
+            <v-icon>mdi-cart</v-icon>
+            Cart
+          </span>
           <v-spacer/>
           <v-btn class="red--text darken-1" icon @click="cartDialog = false">
             <v-icon>mdi-close</v-icon>
@@ -172,14 +188,33 @@
       location: "HOME",
       prevHeight: 0,
       totalCart: 0,
-      userInfo: {
-        dialogState: false,
+      userDialog: false,
+      cartDialog: false,
+      userForm: {
+        valid: false,
         firstName: '',
         lastName: '',
         email: '',
-        phone: ''
+        phone: '',
+        rules: {
+          firstName: [
+            v => !!v || 'First Name is required',
+            v => (v && v.length > 3) || 'First Name must be more than 3 characters',
+          ],
+          lastName: [
+            v => !!v || 'Last Name is required',
+            v => (v && v.length > 3) || 'Last Name must be more than 3 characters',
+          ],
+          email: [
+            v => !!v || 'Email is required',
+            v => /.+@.+\..+/.test(v) || 'Email must be a valid Email address',
+          ],
+          phone: [
+            v => !!v || 'Phone Number is required',
+            v => /^[0-9]+$/.test(v) || 'Phone Number needs to be numbers',
+          ]
+        }
       },
-      cartDialog: false,
       snackbar: {
         state: false,
         multiline: false,
@@ -196,10 +231,10 @@
       this.totalCart = order.cart.total
     },
     mounted() {
-      setInterval(() => {
-        this.fillProducts()
-        this.fillCatalogs()
-      }, 10000)
+      // setInterval(() => {
+      //   this.fillProducts()
+      //   this.fillCatalogs()
+      // }, 10000)
       setTimeout(() => {
         this.loaded = true
       }, 2000)
@@ -220,6 +255,14 @@
           setTimeout(() => {
             this.loaded = true
           }, 2000)
+        }, deep: true
+      },
+      'order': {
+        handler (val) {
+          this.userForm.firstName = val.firstName
+          this.userForm.lastName = val.lastName
+          this.userForm.email = val.email
+          this.userForm.phone = val.phone
         }, deep: true
       },
       'order.cart': {
@@ -250,11 +293,45 @@
         element.style.height = "auto";
       },
       dispatchUserInfo() {
-        this.userInfo.dialogState = true
+        let order = this.$store.getters.order
+        if (order.firstName !== null && order.lastName !== null) {
+          this.dispatchCart()
+        } else {
+          this.userDialog = true
+        }
+      },
+      closeUserInfo () {
+        this.userDialog = false
+        this.$refs.userForm.resetValidation()
       },
       dispatchCart() {
-        this.userInfo.dialogState = false
-        this.cartDialog = true
+        let order = this.$store.getters.order
+        if (order.firstName !== null && order.lastName !== null) {
+          this.cartDialog = true
+        } else {
+          let user = this.userForm
+          const store = this.$store
+          if (this.$refs.userForm.validate()) {
+            let order = {
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              phone: user.phone
+            }
+            store.dispatch('setOrder', order)
+            this.snackbar = {
+              state: true,
+              text: 'Data saved!',
+              timeout: 3000,
+              color: 'success'
+            }
+            this.userDialog = false
+            this.cartDialog = true
+          }
+        }
+      },
+      closeCart () {
+
       },
       async fillProducts () {
         const store = this.$store;
