@@ -62,14 +62,6 @@
         <router-view/>
       </transition>
 
-      <v-btn fixed dark fab bottom right class="pink-btn">
-        <v-badge left>
-          <template v-if="totalCart > 0" v-slot:badge>
-            <span>{{ totalCart }}</span>
-          </template>
-          <v-icon>mdi-cart</v-icon>
-        </v-badge>
-      </v-btn>
       <v-footer absolute class="pt-8 pb-5" style="background-color: initial">
         <v-row justify="center" no-gutters>
           <v-col class="py-4 text-center" cols="12">
@@ -82,14 +74,96 @@
         </v-row>
       </v-footer>
     </v-content>
+
+    <v-btn fixed dark fab bottom right class="pink-btn" @click="dispatchUserInfo">
+      <v-badge left>
+        <template v-if="totalCart > 0" v-slot:badge>
+          <span>{{ totalCart }}</span>
+        </template>
+        <v-icon>mdi-cart</v-icon>
+      </v-badge>
+    </v-btn>
+
+    <v-dialog v-model="userInfo.dialogState" persistent max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Quick Intro</span>
+        </v-card-title>
+        <v-card-subtitle>
+          <span class="subtitle-2 font-weight-light">Please tell us about yourself!</span>
+        </v-card-subtitle>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field v-model="userInfo.firstName" label="First Name" required/>
+              </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field v-model="userInfo.lastName" label="Last Name" required/>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field v-model="userInfo.email" label="Email" required/>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field v-model="userInfo.phone"
+                              label="Phone Number"
+                              hint="Please provide phone number that attached to Whatsapp Messenger"
+                              required/>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-divider class="mx-auto"/>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn color="red darken-1"
+                 class="white--text"
+                 @click="userInfo.dialogState = false">
+            Cancel
+          </v-btn>
+          <v-btn color="success"
+                 class="white--text"
+                 @click="dispatchCart">
+            Proceed
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="cartDialog" max-width="1200px">
+      <v-card>
+        <v-card-title>
+          <v-spacer/>
+          <v-btn class="red--text darken-1" icon @click="cartDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <Cart/>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-snackbar v-model="snackbar.state"
+                :timeout="snackbar.timeout"
+                :color="snackbar.color || 'primary'"
+                :multi-line="snackbar.multiline"
+                top>
+      {{ snackbar.text }}
+      <v-btn dark text @click="snackbar.state = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
   import {mapState} from 'vuex'
   import Api from "./services/Api";
+  import Cart from "./views/Cart";
 
   export default {
+    components: {Cart},
     data: () => ({
       showMenu: false,
       loaded: false,
@@ -97,7 +171,22 @@
       menuItems: [],
       location: "HOME",
       prevHeight: 0,
-      totalCart: 0
+      totalCart: 0,
+      userInfo: {
+        dialogState: false,
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: ''
+      },
+      cartDialog: false,
+      snackbar: {
+        state: false,
+        multiline: false,
+        color: '',
+        text: '',
+        timeout: ''
+      }
     }),
     created() {
       this.fillProducts()
@@ -160,12 +249,25 @@
       afterEnter(element) {
         element.style.height = "auto";
       },
+      dispatchUserInfo() {
+        this.userInfo.dialogState = true
+      },
+      dispatchCart() {
+        this.userInfo.dialogState = false
+        this.cartDialog = true
+      },
       async fillProducts () {
         const store = this.$store;
         await Api.product.getAll().then(response => {
           store.dispatch('fillProduct', response.data)
         }).catch(err => {
-          alert(err)
+          this.snackbar = {
+            state: false,
+            multiline: false,
+            color: 'error',
+            text: `<b>productError</b><br/>${err}`,
+            timeout: '3000'
+          }
         })
       },
       async fillCatalogs () {
@@ -173,7 +275,13 @@
         await Api.catalog.getAll().then(response => {
           store.dispatch('fillCatalog', response.data)
         }).catch(err => {
-          alert(err)
+          this.snackbar = {
+            state: false,
+            multiline: false,
+            color: 'error',
+            text: `<b>catalogTypeError</b><br/>${err}`,
+            timeout: '3000'
+          }
         })
       }
     }
