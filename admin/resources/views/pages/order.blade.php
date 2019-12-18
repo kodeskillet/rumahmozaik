@@ -47,7 +47,10 @@
                         '<td>' + item.email + '</td>' +
                         '<td>' + item.whatsapp + '</td>' +
                         '<td>' +
-                        '   <button class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail('+ item.id +')">Detail</button>'
+                        '   <button class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail(' + item.id + ')">Detail</button>'+
+                        '</td>' +
+                        '<td>' +
+                        '   <button class = "btn btn-warning" id = "state_' + item.id + '" onclick = "state(' + item.id + ')" ' + if(item.status.localeCompare("SELESAI")) "disabled" + '>' + item.status + '</button>'
                         '</td>' +
                         '</tr>'
                 }
