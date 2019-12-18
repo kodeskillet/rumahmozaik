@@ -28,6 +28,27 @@
     </div>
 </div>
 
+{{-- Start of modal --}}
+<div id="detailModal" class="modal" role="dialog" style="z-index:9999; min-height:550px; position: fixed; top: 42%; left: 50%">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">Detail Order</h4>
+        </div>
+        <div class="modal-body">
+            <div class="container" id="modalDataContainer">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                    <span class='glyphicon glyphicon-remove'></span> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- End of modal --}}
+
 <script>
     jQuery(document).ready(function(){
         getData();
@@ -90,7 +111,7 @@
         $.ajax({
             url: `http://127.0.0.1:8000/api/order/`+id,
             method: "get",
-            success: function(){
+            success: function(response){
 
             }
         })
