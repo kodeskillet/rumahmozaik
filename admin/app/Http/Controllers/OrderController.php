@@ -63,7 +63,6 @@ class OrderController extends Controller
         $order->name = $request->name;
         $order->email = $request->email;
         $order->whatsapp = $request->whatsapp;
-        $order->status = "PROSES";
         $order->save();
 
         $orderId = $order->id;
