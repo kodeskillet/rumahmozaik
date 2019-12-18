@@ -78,7 +78,7 @@ class ProductController extends Controller
     public function show ($id)
     {
         $product = Product::findOrFail($id);
-        $product->catalogName =$product->catalogName = DB::table('catalog_type')
+        $product->catalogName = DB::table('catalog_type')
                 ->select('name')
                 ->where('id',$product->catalogType)
                 ->first();

@@ -52,7 +52,7 @@ class OrderController extends Controller
         )
         ->where('order_id', $order->id)
         ->get();
-        $json = json_encode(OrderResource::collection($order));
+        $json = json_encode(new OrderResource($order));
         return $json;
     }
 }
