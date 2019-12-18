@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\CatalogTypeController;
 use App\Http\Controllers\Product;
+use App\Http\Controllers\Order;
 
 class PageController extends Controller
 {
@@ -70,5 +71,11 @@ class PageController extends Controller
     {
         $catalogs = $catalogs->destroy($id);
         return redirect()->action('PageController@catalog');
+    }
+
+    public function order(OrderController $orders)
+    {
+        $orders = $orders->index();
+        return view('pages.order', compact('orders'));
     }
 }
