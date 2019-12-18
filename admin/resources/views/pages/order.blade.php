@@ -85,5 +85,15 @@
             }
         })
     }
+
+    function detail(id){
+        $.ajax({
+            url: `http://127.0.0.1:8000/api/order/`+id,
+            method: "get",
+            success: function(){
+
+            }
+        })
+    }
 </script>
 @endsection
