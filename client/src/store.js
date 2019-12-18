@@ -35,7 +35,8 @@ const store = new Vuex.Store({
     products: null,
     catalogs: null,
     order: {
-      name: null,
+      firstName: null,
+      lastName: null,
       email: null,
       phone: null,
       cart: {
@@ -59,7 +60,8 @@ const store = new Vuex.Store({
       state.catalogs = catalogs
     },
     setOrder (state, order) {
-      state.order.name = order.name
+      state.order.firstName = order.firstName
+      state.order.lastName = order.lastName
       state.order.email = order.email
       state.order.phone = order.phone
     },
