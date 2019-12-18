@@ -34,7 +34,21 @@
     });
 
     function getData(){
-
+        $('#dataContainer').html("");
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/orders',
+            method: 'get',
+            success: (response) => {
+                const data = JSON.parse(response);
+                data.forEach(function(item)){
+                    HTML =
+                        '<tr>'+
+                        '<td>' + item.name + '</td>' +
+                        '<td>' +  + '</td>' +
+                        '</tr>'
+                }
+            }
+        })
     }
 </script>
 @endsection
