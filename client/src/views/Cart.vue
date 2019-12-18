@@ -8,7 +8,10 @@
 <script>
   // Ini ndausah diumek
   export default {
-    name: "Cart"
+    name: "Cart",
+    data: () => ({
+
+    })
   }
 </script>
 

@@ -13,7 +13,12 @@
       </div>
       <v-spacer/>
       <v-toolbar-title class="headline text-uppercase">
-        <span class="quote">all about design</span>
+        <span class="quote">
+          By
+          <span class="deep-blue font-weight-bold">Hesti</span>
+          to
+          <span class="bright-blue font-weight-bold">The World</span>
+        </span>
         <span class="font-weight-light separator">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
         <span class="deep-pink">RUMAH</span>
         <span class="font-weight-light light-pink">MOZAIK</span>
@@ -37,6 +42,16 @@
     </v-card>
 
     <v-content @click.native="showMenu = false">
+      <div class="loading" :class="{'hidden': loaded}" style="padding-top: 200px">
+        <v-row justify="center" align="center">
+          <div class="text-center ma-12">
+            <v-progress-circular indeterminate
+                                 :size="50"
+                                 color="primary">
+            </v-progress-circular>
+          </div>
+        </v-row>
+      </div>
       <transition
         name="fade"
         mode="out-in"
@@ -49,17 +64,17 @@
 
       <v-btn fixed dark fab bottom right class="pink-btn">
         <v-badge left>
-          <template v-slot:badge>
-            <span>2</span>
+          <template v-if="totalCart > 0" v-slot:badge>
+            <span>{{ totalCart }}</span>
           </template>
           <v-icon>mdi-cart</v-icon>
         </v-badge>
       </v-btn>
-      <v-footer padless style="background-color: transparent">
+      <v-footer absolute class="pt-8 pb-5" style="background-color: initial">
         <v-row justify="center" no-gutters>
           <v-col class="py-4 text-center" cols="12">
-            &copy;
-            {{ new Date().getFullYear() }} -
+            <v-icon>mdi-copyright</v-icon>
+            <span class="font-weight-bold">{{ new Date().getFullYear() }}.</span>
             <a href="https://github.com/kodeskillet" target="_blank">
               <code>kodeskillet.</code>
             </a>
@@ -77,11 +92,12 @@
   export default {
     data: () => ({
       showMenu: false,
+      loaded: false,
       menuIcon: "mdi-menu",
       menuItems: [],
       location: "HOME",
       prevHeight: 0,
-      allProducts: null
+      totalCart: 0
     }),
     created() {
       this.fillProducts()
@@ -93,8 +109,11 @@
         this.fillProducts()
         this.fillCatalogs()
       }, 10000)
+      setTimeout(() => {
+        this.loaded = true
+      }, 2000)
     },
-    computed: mapState(['products', 'catalogs']),
+    computed: mapState(['products', 'catalogs', 'cart']),
     watch: {
       // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
@@ -104,15 +123,18 @@
           this.menuIcon = "mdi-menu"
         }
       },
-      'products': {
-        handler (val) {
-          this.allProducts = val
+      '$route': {
+        handler() {
+          this.loaded = false
+          setTimeout(() => {
+            this.loaded = true
+          }, 2000)
         }, deep: true
       },
-      'catalogs': {
+      'cart': {
         handler (val) {
-          this.allCatalogs = val
-        }, deep: true
+          this.totalCart = val.total
+        }
       }
     },
     methods: {
@@ -157,9 +179,6 @@
 </script>
 
 <style>
-  html {
-    overflow: hidden;
-  }
   .deep-pink {
     color: #e84242;
   }
@@ -177,6 +196,24 @@
   }
   .bg-light-pink {
     background-color: #eea6a6 !important;
+  }
+  .loading {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    background-color: #fff;
+    overflow: hidden;
+    visibility: visible;
+    opacity: 1;
+    transition:opacity 0.5s linear;
+  }
+  .loading.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
   }
 </style>
 
