@@ -1,8 +1,13 @@
 <template>
   <section class="product mb-12 pb-12">
     <v-tabs center-active background-color="blue-grey lighten-5" light grow class="fixed-tabs-bar">
-      <v-tab v-for="(catalog, index) in allCatalogs" class="blue--text text--darken-3" :key="index" :href="`#tab-${index}`">
-        {{ catalog.name }}
+      <v-tab v-for="(catalog, index) in allCatalogs" class="pink--text text--darken-3" :key="index" :href="`#tab-${index}`">
+        <v-badge right>
+          <template v-if="amountCatalog(catalog.id) > 0" v-slot:badge>
+            <span>{{ amountCatalog(catalog.id) }}</span>
+          </template>
+          <span>{{ catalog.name }}</span>
+        </v-badge>
       </v-tab>
       <v-tab-item v-for="(catalog, index) in allCatalogs" :key="index" :value="'tab-'+index">
         <v-container>
@@ -38,9 +43,9 @@
                 <v-card-text>
                   <p>
                     <span class="font-weight-thin display-1">{{product.productName}}</span>
-                    <span class="font-weight-bold title pink--text text--lighten-3">
+                    <span v-if="amount(product.id)" class="font-weight-bold title pink--text text--lighten-3">
                       &nbsp;x
-                      1
+                      {{amount(product.id)}}
                     </span>
                   </p>
                   <v-chip color="pink lighten-5" pill>
@@ -50,16 +55,56 @@
                     <span class="font-weight-regular">{{format(product.price)}}</span>
                   </v-chip>
                 </v-card-text>
-                <v-divider class="mx-auto"></v-divider>
+                <v-divider class="mx-auto"/>
                 <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn  color="red lighten-2"
-                          class="white--text"
-                         raised>
+                  <v-spacer v-if="!amount(product.id)"/>
+                  <v-btn v-if="!amount(product.id)"
+                         color="green lighten-2"
+                         class="white--text"
+                         raised small
+                         @click="addToCart(product.id)">
                     <v-icon>mdi-cart</v-icon>
                     &nbsp;Add to cart
                   </v-btn>
-                  <v-spacer></v-spacer>
+                  <v-spacer v-if="amount(product.id)"/>
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="red darken-1"
+                             class="white--text"
+                             raised small
+                             v-on="on"
+                             @click="removeFromCart(product.id)">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Remove from cart</span>
+                  </v-tooltip>
+                  <v-spacer v-if="amount(product.id)"/>
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="red lighten-1"
+                             class="white--text"
+                             small v-on="on"
+                             @click="reduceItem(product.id)">
+                        <v-icon>mdi-minus</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Reduce quantity</span>
+                  </v-tooltip>
+                  &nbsp;
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn v-if="amount(product.id)"
+                             color="primary lighten-2"
+                             class="white--text"
+                             small v-on="on"
+                             @click="addToCart(product.id)">
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Add quantity</span>
+                  </v-tooltip>
+                  <v-spacer/>
                 </v-card-actions>
               </v-card>
             </v-col>
@@ -67,6 +112,16 @@
         </v-container>
       </v-tab-item>
     </v-tabs>
+
+    <v-snackbar v-model="snackbar.state"
+                :timeout="snackbar.timeout"
+                :color="snackbar.color || 'primary'"
+                top>
+      {{ snackbar.text }}
+      <v-btn dark text @click="snackbar.state = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </section>
 </template>
 
@@ -80,12 +135,21 @@ export default {
     imgBaseUrl: `${Api.baseUrl}/storage/products`,
     allProducts: null,
     allCatalogs: null,
+    currentCart: [],
+    snackbar: {
+      state: false,
+      color: '',
+      text: '',
+      timeout: 0,
+    }
   }),
   mounted() {
     this.allProducts = this.$store.getters.products
     this.allCatalogs = this.$store.getters.catalogs
+    let cart = this.$store.getters.cart
+    this.currentCart = cart.content.map(el => el)
   },
-  computed: mapState(['products', 'catalogs']),
+  computed: mapState(['products', 'catalogs', 'order']),
   watch: {
     'products': {
       handler (val) {
@@ -95,7 +159,12 @@ export default {
     'catalogs': {
       handler (val) {
         this.allCatalogs = val
-      },deep: true
+      }, deep: true
+    },
+    'order.cart.content': {
+      handler (val) {
+        this.currentCart = val
+      }, deep: true
     }
   },
   methods: {
@@ -103,8 +172,102 @@ export default {
       let products = this.allProducts
       return products.filter(product => product.catalogType === catalogId)
     },
-    addToCart (product) {
+    addToCart (productId) {
+      let cart = this.currentCart
+      if (this.currentCart.length === 0) {
+        cart.push({
+          productId: productId,
+          amount: 1
+        })
+      } else {
+        let tmpIndex = null
+        cart.some((el, index) => {
+          if (el.productId === productId) {
+            tmpIndex = index
+          }
+        })
+        if (tmpIndex != null) {
+          cart[tmpIndex].amount += 1
+        } else {
+          cart.push({
+            productId: productId,
+            amount: 1
+          })
+        }
+      }
+      this.$store.dispatch('setCart', cart)
+      this.snackbar = {
+        state: true,
+        text: 'Added to cart.',
+        color: 'success',
+        timeout: 3000
+      }
+    },
+    reduceItem (productId) {
+      let cart = this.currentCart
+      let tmpIndex = 0
+      let tmpAmount = 0
+      cart.forEach((el, index) => {
+        if (el.productId === productId) {
+          tmpIndex = index
+          tmpAmount = el.amount
+        }
+      })
 
+      if (tmpAmount === 1) {
+        cart = this.currentCart.filter(el => {
+          return (el.productId !== productId)
+        })
+        this.snackbar = {
+          state: true,
+          text: 'Removed from cart.',
+          color: 'info',
+          timeout: 3000
+        }
+      } else {
+        cart[tmpIndex].amount--
+        this.snackbar = {
+          state: true,
+          text: 'Amount reduced.',
+          color: 'info',
+          timeout: 3000
+        }
+      }
+      this.$store.dispatch('setCart', cart)
+    },
+    removeFromCart (productId) {
+      let cart = this.currentCart.filter(el => {
+        return (el.productId !== productId)
+      })
+      this.$store.dispatch('setCart', cart)
+      this.snackbar = {
+        state: true,
+        text: 'Removed from cart.',
+        color: 'error',
+        timeout: 3000
+      }
+    },
+
+    amount (productId) {
+      let data = this.currentCart.find(el => el.productId === productId)
+      if (data) {
+        const objData = JSON.parse(JSON.stringify(data))
+        return objData.amount
+      }
+    },
+    amountCatalog (catalogId) {
+      let cart = this.currentCart
+      let amount = 0
+      cart.forEach(el => {
+        this.allProducts.forEach(product => {
+          if (el.productId === product.id ) {
+            if (product.catalogType === catalogId) {
+              amount += 1
+            }
+          }
+        })
+      })
+      return amount
     },
     format (num) {
       return (num).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');

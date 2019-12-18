@@ -62,14 +62,6 @@
         <router-view/>
       </transition>
 
-      <v-btn fixed dark fab bottom right class="pink-btn">
-        <v-badge left>
-          <template v-if="totalCart > 0" v-slot:badge>
-            <span>{{ totalCart }}</span>
-          </template>
-          <v-icon>mdi-cart</v-icon>
-        </v-badge>
-      </v-btn>
       <v-footer absolute class="pt-8 pb-5" style="background-color: initial">
         <v-row justify="center" no-gutters>
           <v-col class="py-4 text-center" cols="12">
@@ -82,14 +74,112 @@
         </v-row>
       </v-footer>
     </v-content>
+
+    <v-btn fixed dark fab bottom right class="pink-btn" @click="dispatchUserInfo">
+      <v-badge left>
+        <template v-if="totalCart > 0" v-slot:badge>
+          <span>{{ totalCart }}</span>
+        </template>
+        <v-icon>mdi-cart</v-icon>
+      </v-badge>
+    </v-btn>
+
+    <v-dialog v-model="userDialog" persistent max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Quick Intro</span>
+        </v-card-title>
+        <v-card-subtitle>
+          <span class="subtitle-2 font-weight-light">Please tell us about yourself!</span>
+        </v-card-subtitle>
+        <v-card-text>
+          <v-container>
+            <v-form ref="userForm" v-model="userForm.valid" lazy-validation>
+              <v-row>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="userForm.firstName"
+                                label="First Name"
+                                :rules="userForm.rules.firstName"
+                                required/>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <v-text-field v-model="userForm.lastName"
+                                label="Last Name"
+                                :rules="userForm.rules.lastName"
+                                required/>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="userForm.email"
+                                label="Email"
+                                :rules="userForm.rules.email"
+                                required/>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="userForm.phone"
+                                label="Phone Number"
+                                :rules="userForm.rules.phone"
+                                hint="Please provide phone number that attached to Whatsapp Messenger"
+                                required/>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-container>
+        </v-card-text>
+        <v-divider class="mx-auto"/>
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn color="red darken-1"
+                 class="white--text"
+                 @click="closeUserInfo">
+            Cancel
+          </v-btn>
+          <v-btn color="success"
+                 class="white--text"
+                 @click="dispatchCart">
+            Proceed
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="cartDialog" max-width="1200px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">
+            <v-icon>mdi-cart</v-icon>
+            Cart
+          </span>
+          <v-spacer/>
+          <v-btn class="red--text darken-1" icon @click="cartDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <Cart/>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-snackbar v-model="snackbar.state"
+                :timeout="snackbar.timeout"
+                :color="snackbar.color || 'primary'"
+                :multi-line="snackbar.multiline"
+                top>
+      {{ snackbar.text }}
+      <v-btn dark text @click="snackbar.state = false">
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
   import {mapState} from 'vuex'
   import Api from "./services/Api";
+  import Cart from "./views/Cart";
 
   export default {
+    components: {Cart},
     data: () => ({
       showMenu: false,
       loaded: false,
@@ -97,23 +187,59 @@
       menuItems: [],
       location: "HOME",
       prevHeight: 0,
-      totalCart: 0
+      totalCart: 0,
+      userDialog: false,
+      cartDialog: false,
+      userForm: {
+        valid: false,
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        rules: {
+          firstName: [
+            v => !!v || 'First Name is required',
+            v => (v && v.length > 3) || 'First Name must be more than 3 characters',
+          ],
+          lastName: [
+            v => !!v || 'Last Name is required',
+            v => (v && v.length > 3) || 'Last Name must be more than 3 characters',
+          ],
+          email: [
+            v => !!v || 'Email is required',
+            v => /.+@.+\..+/.test(v) || 'Email must be a valid Email address',
+          ],
+          phone: [
+            v => !!v || 'Phone Number is required',
+            v => /^[0-9]+$/.test(v) || 'Phone Number needs to be numbers',
+          ]
+        }
+      },
+      snackbar: {
+        state: false,
+        multiline: false,
+        color: '',
+        text: '',
+        timeout: ''
+      }
     }),
     created() {
       this.fillProducts()
       this.fillCatalogs()
       this.menuItems = this.$store.getters.menuItems;
+      let order = this.$store.getters.order
+      this.totalCart = order.cart.total
     },
     mounted() {
-      setInterval(() => {
-        this.fillProducts()
-        this.fillCatalogs()
-      }, 10000)
+      // setInterval(() => {
+      //   this.fillProducts()
+      //   this.fillCatalogs()
+      // }, 10000)
       setTimeout(() => {
         this.loaded = true
       }, 2000)
     },
-    computed: mapState(['products', 'catalogs', 'cart']),
+    computed: mapState(['products', 'catalogs', 'order']),
     watch: {
       // eslint-disable-next-line no-unused-vars
       showMenu(newVal, oldVal) {
@@ -131,10 +257,18 @@
           }, 2000)
         }, deep: true
       },
-      'cart': {
+      'order': {
+        handler (val) {
+          this.userForm.firstName = val.firstName
+          this.userForm.lastName = val.lastName
+          this.userForm.email = val.email
+          this.userForm.phone = val.phone
+        }, deep: true
+      },
+      'order.cart': {
         handler (val) {
           this.totalCart = val.total
-        }
+        }, deep: true
       }
     },
     methods: {
@@ -158,12 +292,59 @@
       afterEnter(element) {
         element.style.height = "auto";
       },
+      dispatchUserInfo() {
+        let order = this.$store.getters.order
+        if (order.firstName !== null && order.lastName !== null) {
+          this.dispatchCart()
+        } else {
+          this.userDialog = true
+        }
+      },
+      closeUserInfo () {
+        this.userDialog = false
+        this.$refs.userForm.resetValidation()
+      },
+      dispatchCart() {
+        let order = this.$store.getters.order
+        if (order.firstName !== null && order.lastName !== null) {
+          this.cartDialog = true
+        } else {
+          let user = this.userForm
+          const store = this.$store
+          if (this.$refs.userForm.validate()) {
+            let order = {
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              phone: user.phone
+            }
+            store.dispatch('setOrder', order)
+            this.snackbar = {
+              state: true,
+              text: 'Data saved!',
+              timeout: 3000,
+              color: 'success'
+            }
+            this.userDialog = false
+            this.cartDialog = true
+          }
+        }
+      },
+      closeCart () {
+
+      },
       async fillProducts () {
         const store = this.$store;
         await Api.product.getAll().then(response => {
           store.dispatch('fillProduct', response.data)
         }).catch(err => {
-          alert(err)
+          this.snackbar = {
+            state: false,
+            multiline: false,
+            color: 'error',
+            text: `<b>productError</b><br/>${err}`,
+            timeout: '3000'
+          }
         })
       },
       async fillCatalogs () {
@@ -171,7 +352,13 @@
         await Api.catalog.getAll().then(response => {
           store.dispatch('fillCatalog', response.data)
         }).catch(err => {
-          alert(err)
+          this.snackbar = {
+            state: false,
+            multiline: false,
+            color: 'error',
+            text: `<b>catalogTypeError</b><br/>${err}`,
+            timeout: '3000'
+          }
         })
       }
     }

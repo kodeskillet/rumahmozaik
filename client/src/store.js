@@ -34,16 +34,23 @@ const store = new Vuex.Store({
     ],
     products: null,
     catalogs: null,
-    cart: {
-      content: [],
-      total: 0
+    order: {
+      firstName: null,
+      lastName: null,
+      email: null,
+      phone: null,
+      cart: {
+        content: [],
+        total: 0
+      },
     }
   },
   getters: {
     menuItems: state => state.menuItems,
     products: state => state.products,
     catalogs: state => state.catalogs,
-    cart: state => state.cart
+    order: state => state.order,
+    cart: state => state.order.cart
   },
   mutations: {
     fillProduct (state, products) {
@@ -52,8 +59,19 @@ const store = new Vuex.Store({
     fillCatalog (state, catalogs) {
       state.catalogs = catalogs
     },
+    setOrder (state, order) {
+      state.order.firstName = order.firstName
+      state.order.lastName = order.lastName
+      state.order.email = order.email
+      state.order.phone = order.phone
+    },
     setCart (state, cart) {
-      state.cart = cart
+      state.order.cart.content = cart
+      let total = 0
+      cart.forEach(el => {
+        total += el.amount
+      })
+      state.order.cart.total = total
     }
   },
   actions: {
@@ -62,6 +80,9 @@ const store = new Vuex.Store({
     },
     fillCatalog ({commit}, catalogs) {
       commit('fillCatalog', catalogs)
+    },
+    setOrder ({commit}, order) {
+      commit('setOrder', order)
     },
     setCart ({commit}, cart) {
       commit('setCart', cart)
