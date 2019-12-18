@@ -47,14 +47,41 @@
                         '<td>' + item.email + '</td>' +
                         '<td>' + item.whatsapp + '</td>' +
                         '<td>' +
-                        '   <button class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail(' + item.id + ')">Detail</button>'+
+                        '   <button type="button" class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail(' + item.id + ')">Detail</button>'+
                         '</td>' +
                         '<td>' +
-                        '   <button class = "btn btn-warning" id = "state_' + item.id + '" onclick = "state(' + item.id + ')">' + item.status + '</button>' +
+                        '   <button type="button" class = "btn btn-warning" id = "state_' + item.id + '" onclick = "state(' + item.id + ')" ' + (item.status == ("SELESAI") ? 'disabled' : '' ) + '>' + item.status + '</button>' +
                         '</td>' +
                         '</tr>';
                         $('#dataContainer').append(HTML);
-                )}
+                });
+            }
+        })
+    }
+
+    function state(id){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        })
+        $.ajax({
+            url: 'http://127.0.0.1:8000/api/product/statechange',
+            method: 'post',
+            data: id,
+            success: function(){
+                getData();
+                $.notify({
+                    icon: "tim-icons icon-bell-55",
+                    message: "1 Order done"
+                },{
+                    type: type['#f6383b'],
+                    timer: 5000,
+                    placement: {
+                        from: 'top',
+                        align: 'center'
+                    }
+                })
             }
         })
     }
