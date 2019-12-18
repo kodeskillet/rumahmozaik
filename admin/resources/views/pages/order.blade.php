@@ -118,8 +118,8 @@
                 $('#detailModal').modal('show');
                 data.cart.forEach(function(item){
                     HTML =
-                        '<p>Nama Product : ' + item.productName + '</p>' +
-                        '<p>Jumlah Product :' + item.amount + '</p>' +
+                        '<p>Nama Product    : ' + item.productName + '</p>' +
+                        '<p>Jumlah Product  : ' + item.amount + '</p>' +
                         '<hr>';
                     $('#modalDataContainer').append(HTML);
                 })
