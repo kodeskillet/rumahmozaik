@@ -44,7 +44,11 @@
                     HTML =
                         '<tr>'+
                         '<td>' + item.name + '</td>' +
-                        '<td>' +  + '</td>' +
+                        '<td>' + item.email + '</td>' +
+                        '<td>' + item.whatsapp + '</td>' +
+                        '<td>' +
+                        '   <button class = "btn btn-success" id = "detailOrder_' + item.id + '" onclick = "detail('+ item.id +')">Detail</button>'
+                        '</td>' +
                         '</tr>'
                 }
             }
