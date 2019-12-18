@@ -61,30 +61,50 @@
                   <v-btn v-if="!amount(product.id)"
                          color="green lighten-2"
                          class="white--text"
-                         raised @click="addToCart(product.id)">
+                         raised small
+                         @click="addToCart(product.id)">
                     <v-icon>mdi-cart</v-icon>
                     &nbsp;Add to cart
                   </v-btn>
-                  <v-btn v-if="amount(product.id)"
-                         color="red darken-1"
-                         class="white--text"
-                         raised @click="removeFromCart(product.id)">
-                    <v-icon>mdi-delete</v-icon>
-                    &nbsp;Remove from cart
-                  </v-btn>
+                  <v-spacer v-if="amount(product.id)"/>
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="red darken-1"
+                             class="white--text"
+                             raised small
+                             v-on="on"
+                             @click="removeFromCart(product.id)">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Remove from cart</span>
+                  </v-tooltip>
+                  <v-spacer v-if="amount(product.id)"/>
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn color="red lighten-1"
+                             class="white--text"
+                             small v-on="on"
+                             @click="reduceItem(product.id)">
+                        <v-icon>mdi-minus</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Reduce quantity</span>
+                  </v-tooltip>
+                  &nbsp;
+                  <v-tooltip bottom v-if="amount(product.id)">
+                    <template v-slot:activator="{ on }">
+                      <v-btn v-if="amount(product.id)"
+                             color="primary lighten-2"
+                             class="white--text"
+                             small v-on="on"
+                             @click="addToCart(product.id)">
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
+                    </template>
+                    <span>Add quantity</span>
+                  </v-tooltip>
                   <v-spacer/>
-                  <v-btn v-if="amount(product.id)"
-                         color="red lighten-1"
-                         class="white--text"
-                         @click="reduceItem(product.id)">
-                    <v-icon>mdi-minus</v-icon>
-                  </v-btn>
-                  <v-btn v-if="amount(product.id)"
-                         color="primary lighten-2"
-                         class="white--text"
-                         @click="addToCart(product.id)">
-                    <v-icon>mdi-plus</v-icon>
-                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-col>
