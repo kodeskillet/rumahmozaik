@@ -108,11 +108,21 @@
     }
 
     function detail(id){
+        $('#modalDataContainer').html("")
+
         $.ajax({
             url: `http://127.0.0.1:8000/api/order/`+id,
             method: "get",
             success: function(response){
-
+                const data = JSON.parse(response);
+                $('#detailModal').modal('show');
+                data.cart.forEach(function(item){
+                    HTML =
+                        '<p>Nama Product : ' + item.productName + '</p>' +
+                        '<p>Jumlah Product :' + item.amount + '</p>' +
+                        '<hr>';
+                    $('#modalDataContainer').append(HTML);
+                })
             }
         })
     }
