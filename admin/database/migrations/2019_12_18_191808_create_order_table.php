@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateOrderTable extends Migration
+class CreateOrderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class UpdateOrderTable extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
-            $table->dropColumn('id');
-            // $table->bigIncrements('id');
+        Schema::create('order', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
-            $table->bigInteger('whatsapp');
+            $table->string('whatsapp');
             $table->timestamps();
         });
     }
@@ -30,8 +29,6 @@ class UpdateOrderTable extends Migration
      */
     public function down()
     {
-        Schema::table('order', function (Blueprint $table) {
-            // $table->bigIncrements('id');
-        });
+        Schema::dropIfExists('order');
     }
 }

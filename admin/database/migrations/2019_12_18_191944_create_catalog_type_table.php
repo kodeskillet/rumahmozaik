@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateOrderTable2 extends Migration
+class CreateCatalogTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class UpdateOrderTable2 extends Migration
      */
     public function up()
     {
-        Schema::table('order', function (Blueprint $table) {
+        Schema::create('catalog_type', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
         });
     }
 
@@ -25,8 +26,6 @@ class UpdateOrderTable2 extends Migration
      */
     public function down()
     {
-        Schema::table('order', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('catalog_type');
     }
 }
