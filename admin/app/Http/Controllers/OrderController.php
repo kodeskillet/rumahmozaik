@@ -36,4 +36,23 @@ class OrderController extends Controller
         $json = json_encode(OrderResource::collection($orders));
         return $json;
     }
+
+    public function show(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        $order->orderItem = DB::table('order_item')
+        ->join('product', 'order_item.product_id', '=', 'product.id')
+        ->select(
+            'order_item.product_id',
+            'order_item.order_id',
+            'product.productName',
+            'product.price',
+            'product.picture',
+            'order_item.amount'
+        )
+        ->where('order_id', $order->id)
+        ->get();
+        $json = json_encode(OrderResource::collection($order));
+        return $json;
+    }
 }
