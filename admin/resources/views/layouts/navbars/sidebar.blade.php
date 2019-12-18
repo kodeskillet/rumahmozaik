@@ -38,7 +38,7 @@
             <li>
                 <a data-toggle="collapse" href="#data-input" aria-expanded="true">
                     <i class="fab fa-laravel tim-icons icon-settings-gear-63" ></i>
-                    <span class="nav-link-text" >{{ __('Edit Data') }}</span>
+                    <span class="nav-link-text" >{{ __('Data Center') }}</span>
                     <b class="caret mt-1"></b>
                 </a>
 
@@ -54,6 +54,12 @@
                             <a href="{{ route('pages.catalog')  }}">
                                 <i class="tim-icons icon-bullet-list-67"></i>
                                 <p>{{ _('Catalog Edit') }}</p>
+                            </a>
+                        </li>
+                        <li @if ($pageSlug ?? '' == 'order') class="active " @endif>
+                            <a href="{{ route('pages.order')  }}">
+                                <i class="tim-icons icon-bullet-list-67"></i>
+                                <p>{{ _('Order') }}</p>
                             </a>
                         </li>
                     </ul>
