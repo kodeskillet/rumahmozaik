@@ -11,7 +11,7 @@
       </v-tab>
       <v-tab-item v-for="(catalog, index) in allCatalogs" :key="index" :value="'tab-'+index">
         <v-container>
-          <v-row>
+          <v-row justify="center" align="center">
             <v-col v-if="filterProducts(catalog.id).length === 0" class="text-center" style="margin-top: 10%">
               <p class="deep-pink font-weight-bold display-4 font-italic">Oops!</p>
               <p class="font-italic">
