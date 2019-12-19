@@ -199,11 +199,9 @@
         rules: {
           firstName: [
             v => !!v || 'First Name is required',
-            v => (v && v.length > 3) || 'First Name must be more than 3 characters',
           ],
           lastName: [
             v => !!v || 'Last Name is required',
-            v => (v && v.length > 3) || 'Last Name must be more than 3 characters',
           ],
           email: [
             v => !!v || 'Email is required',
@@ -220,7 +218,7 @@
         multiline: false,
         color: '',
         text: '',
-        timeout: ''
+        timeout: 0
       }
     }),
     created() {
