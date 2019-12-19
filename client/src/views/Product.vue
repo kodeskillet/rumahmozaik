@@ -25,7 +25,7 @@
                    v-for="(product, index) in filterProducts(catalog.id)"
                    :key="index"
                    class="pt-8"
-                   cols="3">
+                   cols="2">
               <v-card raised class="mx-auto">
                 <v-img :src="`${imgBaseUrl}/${product.picture}`"
                        :lazy-src="`${imgBaseUrl}/${product.picture}`"
@@ -40,7 +40,7 @@
                     </v-row>
                   </template>
                 </v-img>
-                <v-card-text>
+                <v-card-text class="text-center">
                   <p>
                     <span class="font-weight-thin display-1">{{product.productName}}</span>
                     <span v-if="amount(product.id)" class="font-weight-bold title pink--text text--lighten-3">
@@ -50,9 +50,9 @@
                   </p>
                   <v-chip color="pink lighten-5" pill>
                     <v-avatar left color="grey">
-                      <span class="font-weight-bold white--text">Rp.</span>
+                      <span class="font-weight-light white--text">Rp.</span>
                     </v-avatar>
-                    <span class="font-weight-regular">{{format(product.price)}}</span>
+                    <span class="font-weight-black">{{format(product.price)}},-</span>
                   </v-chip>
                 </v-card-text>
                 <v-divider class="mx-auto"/>
